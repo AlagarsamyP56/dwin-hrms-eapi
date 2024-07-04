@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        ANYPOINT_USERNAME = credentials('anypoint-username') // Update with the correct ID
-        ANYPOINT_PASSWORD = credentials('anypoint-password') // Update with the correct ID
+        ANYPOINT_USERNAME = credentials('alagar123456') // Update with the correct ID
+        ANYPOINT_PASSWORD = credentials('Good@123') // Update with the correct ID
     }
 
     stages {
