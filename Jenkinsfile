@@ -5,28 +5,34 @@ pipeline {
         stage('Build Application') {
             steps {
                 script {
-                    if (isUnix()) {
-                        sh 'mvn clean install'
-                    } else {
-                        bat 'mvn clean install'
-                    }
+                    bat 'mvn clean install'
                 }
             }
         }
-        stage('Deploy CloudHubs') {
-            environment {
-                ANYPOINT_CREDENTIALS = credentials('anypoint.hrms')
-            }
+        stage('Deploy to Docker') {
             steps {
-                echo 'Deploying mule project due to the latest code commit…'
-                echo 'Deploying to the configured environment….'
                 script {
-                    
-                    if (isUnix()) {
-                        sh "mvn clean deploy -DmuleDeploy"
-                    } else {
-                        bat "mvn clean deploy -DmuleDeploy"
-                    }
+                    // Get the JAR file path using PowerShell on Windows
+                    def jarPath = bat(script: 'powershell -Command "Get-ChildItem target\\*.jar | Select-Object -First 1 | ForEach-Object { $_.FullName }"', returnStdout: true).trim()
+                    jarPath = jarPath.split("\n").last().trim() // Extract the actual path from the command output
+
+                    echo "Verified JAR file path: ${jarPath}"
+
+                    def containerName = env.JOB_NAME
+                    echo "Docker container name: ${containerName}"
+
+                    // Stop and remove existing container
+                    bat "docker stop ${containerName} || exit 0"
+                    bat "docker rm ${containerName} || exit 0"
+
+                    // Run the Docker container
+                    bat "docker run -d --name ${containerName} -p 8082:8082 dockermule"
+
+                    // Print a message indicating that the JAR file will be copied
+                    echo "Copying JAR file to Docker container: ${jarPath}"
+
+                    // Copy the JAR file to the Docker container
+                    bat "docker cp \"${jarPath}\" ${containerName}:/opt/mule/apps"
                 }
             }
         }
