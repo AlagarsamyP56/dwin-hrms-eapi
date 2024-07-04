@@ -96,12 +96,12 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.6.0</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>41cf5e1e-95f6-4a4d-b3ce-adb9b59bc934</groupId>
 			<artifactId>mule-plugin-humanresources-sapi</artifactId>
 			<version>1.0.3</version>
 			<classifier>mule-plugin</classifier>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 
 	<repositories>
