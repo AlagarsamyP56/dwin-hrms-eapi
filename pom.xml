@@ -67,9 +67,9 @@
 			<classifier>mule-plugin</classifier>
 		</dependency>
 		<dependency>
-			<groupId>41cf5e1e-95f6-4a4d-b3ce-adb9b59bc934</groupId>
+			<groupId>1ce1cdf5-d65d-424a-84ec-9fdf5a815068</groupId>
 			<artifactId>humanresources-sapi</artifactId>
-			<version>1.0.3</version>
+			<version>1.0.0</version>
 			<classifier>raml</classifier>
 			<type>zip</type>
 		</dependency>
