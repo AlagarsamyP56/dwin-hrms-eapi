@@ -36,7 +36,7 @@
             <muleVersion>${app.runtime}</muleVersion>
             <username>alagar12345678</username>
             <password>Good@123</password>
-            <applicationName>sssssssssssssss</applicationName>
+            <applicationName>abcdef</applicationName>
             <environment>Sandbox</environment>
             <workerType>Micro</workerType>
             <workers>1</workers>
