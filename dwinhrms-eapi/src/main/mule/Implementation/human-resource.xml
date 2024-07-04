@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sub-flow name="hr_post_resendOTP_Flow" doc:id="48f54275-6562-421a-8a6d-461ed196af92" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.hr.request.resendOTP.method'),&#10;	&quot;host&quot; : p('http.hr.request.host'),&#10;	&quot;basepath&quot; : p('http.hr.request.basepath'),&#10;	&quot;path&quot; : p('http.hr.request.resendOTP.path')&#10;}]" doc:name="request for resendOTP" doc:id="2e8a7838-5b60-4f5b-b02b-c16cd214e606" variableName="request"/>
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="c8f13c4d-2d7a-4936-940b-b970d2e57a1d" name="global-requestSub_Flow"/>
+	</sub-flow>
+	<sub-flow name="hr_post_signin_Flow" doc:id="ea0da571-b803-4d53-95ff-32073b645cc5" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.hr.request.signin.method'),&#10;	&quot;host&quot; : p('http.hr.request.host'),&#10;	&quot;basepath&quot; : p('http.hr.request.basepath'),&#10;	&quot;path&quot; : p('http.hr.request.signin.path')&#10;}]" doc:name="request for signin" doc:id="abd5758a-2e91-4b01-84d9-d91c60ba66f6" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="caba5172-0420-4a06-8eab-5c62885f9f81" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="hr_patch_signin_forgotPassword_flow" doc:id="e19516ef-ecff-4945-925c-59faca966a29" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.hr.request.signin.forgotPassword.method'),&#10;	&quot;host&quot; : p('http.hr.request.host'),&#10;	&quot;basepath&quot; : p('http.hr.request.basepath'),&#10;	&quot;path&quot; : p('http.hr.request.signin.forgotPassword.path')&#10;}]" doc:name="request for signin/forgottPassword" doc:id="8d0bced7-7ac0-40bd-91ee-17e1f16a0131" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="26ad75e4-a804-4603-b9f3-f09253078b8a" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="hr_post_signin_forgotPasswordOTP_flow" doc:id="ca4983b9-1360-4645-8fa9-179e5f7de453" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.hr.request.signin.forgotPassword.OTP.method'),&#10;	&quot;host&quot; : p('http.hr.request.host'),&#10;	&quot;basepath&quot; : p('http.hr.request.basepath'),&#10;	&quot;path&quot; : p('http.hr.request.signin.forgotPassword.OTP.path')&#10;}]" doc:name="request for signin/forgottPasswordOTP" doc:id="0772b8b8-51d9-4409-8d7b-75f863143e94" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="09c71fa6-2be2-4453-8857-aff20977f356" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="hr_post_signup_flow" doc:id="2f542955-810a-4f0d-9ae4-2a757f217627" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.hr.request.signup.method'),&#10;	&quot;host&quot; : p('http.hr.request.host'),&#10;	&quot;basepath&quot; : p('http.hr.request.basepath'),&#10;	&quot;path&quot; : p('http.hr.request.signup.path')&#10;}]" doc:name="request for signup" doc:id="4e7d25e2-ca13-4288-a9eb-efef373fe9af" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="6ce41611-6560-4b3e-81e2-6c9aa4875e29" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="hr_post_signup_OTP_flow" doc:id="99590a65-715e-4571-965e-8881f9c3803b" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.hr.request.signup.OTP.method'),&#10;	&quot;host&quot; : p('http.hr.request.host'),&#10;	&quot;basepath&quot; : p('http.hr.request.basepath'),&#10;	&quot;path&quot; : p('http.hr.request.signup.OTP.path')&#10;}]" doc:name="request for signup_OTP" doc:id="77db32f7-bb01-45c5-acbd-7f6642f087f0" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="33d9637c-14d5-403c-b819-3499e59d7481" name="global-requestSub_Flow" />
+	</sub-flow>
+</mule>

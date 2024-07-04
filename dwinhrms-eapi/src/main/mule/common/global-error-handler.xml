@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<error-handler name="global-error-handlerError_Handler" doc:id="0931f60b-76ad-4d03-929c-6489f1e83a8b" >
+<on-error-propagate type="APIKIT:BAD_REQUEST">
+                <set-variable value="400" doc:name="httpStatus 400" doc:id="8545e3de-9612-4bd4-97f3-41990b343f86" variableName="httpStatus"/>
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: &quot;400&quot;,&#10;  errorMessage: &quot;Bad Request&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Bad Request" doc:id="7f42bdd6-d18e-4faa-aaaf-0aa8adcd3cef" />
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+			<set-variable value="404" doc:name="httpStatus 404" doc:id="b4896a59-51f9-436a-80cb-2d823e07fdbc" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: &quot;404&quot;,&#10;  errorMessage: &quot;API Not Found&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="API Not Found" doc:id="c2f43e03-b08b-4d2d-939a-962752121471" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+                <set-variable value="405" doc:name="httpStatus 405" doc:id="d249f09f-ba79-4176-933f-bc92594094f1" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: &quot;405&quot;,&#10;  errorMessage: &quot;Method not allowed&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Method not allowed" doc:id="50576a75-759e-45a6-bba5-4b798097d94a" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+                <set-variable value="406" doc:name="httpStatus 406" doc:id="d7f0c147-36ef-46a4-a21d-d8c70a8153dd" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: &quot;406&quot;,&#10;  errorMessage: &quot;Not acceptable&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Not acceptable" doc:id="91a6f939-2542-4d23-a80c-84a63fe033be" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+                <set-variable value="415" doc:name="httpStatus 415" doc:id="8b1cb332-4d78-4664-a50e-640ffb7b0b83" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: 415,&#10;  errorMessage: &quot;Unsupported Media Type&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Unsupported Media Type" doc:id="56bbec93-8ff7-4b98-ad02-e76d6387bfc1" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+                <set-variable value="501" doc:name="httpStatus 501" doc:id="e5605ff8-92f1-4036-9dc2-c800ae1ff5dd" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: &quot;501&quot;,&#10;  errorMessage: &quot;Not Implemented&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Not Implemented" doc:id="5436de85-4fb7-44b9-9f79-66a0a2c080ed" />
+            
+</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="68ba2952-7d54-49d7-8f97-3f61e76e6009" type="HTTP:TIMEOUT">
+			<set-variable value="408" doc:name="httpStatus 408" doc:id="269a9d58-d0a0-4e68-9232-d6ac7b903871" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: &quot;408&quot;,&#10;  errorMessage: &quot;Timeout Exceeded&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Timeout Exceeded" doc:id="ad648baf-cf7b-4280-bc9a-6c3134bbdde4" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="4890e7f2-5a90-41d5-8911-0300befff9b3" type="HTTP:UNAUTHORIZED" >
+			<set-variable value="401" doc:name="httpStatus 401" doc:id="ee5fb0d3-a8c3-4cdd-8bc4-f317bc6e77e8" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: &quot;401&quot;,&#10;  errorMessage: &quot;Unauthorized&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Unauthorized" doc:id="946f5115-e34c-4f18-a529-8c6558e09e2c" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="51415840-b386-4ecf-a4e4-7935840a4d85" type="HTTP:INTERNAL_SERVER_ERROR">
+			<set-variable value="500" doc:name="httpStatus 500" doc:id="74c301ed-121b-45c6-92c9-095555f0b616" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: 500,&#10;  errorMessage: &quot;Internal Server Error&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Internal Server Error" doc:id="74a57c2a-433d-49b8-b37c-c071514246ca" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="e87c4fea-1bd8-4b31-b0bf-66174964d851" type="HTTP:SERVICE_UNAVAILABLE" >
+			<set-variable value="503" doc:name="httpStatus 503" doc:id="f54c0534-5585-4957-8fe3-6bbb7c3132e1" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: 503,&#10;  errorMessage: &quot;Service Unavailable&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Service Unavailable" doc:id="7e64a72c-a777-4439-9cbc-643a8c9fedb8" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="ec3f0a86-7926-4e52-b940-50fdb20f5a38" type="HTTP:BAD_GATEWAY" >
+			<set-variable value="502" doc:name="httpStatus 502" doc:id="d0865d2a-898c-4e9d-97f7-273588d1bc0c" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: 502,&#10;  errorMessage: &quot;Bad gateway error&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Bad gateway error" doc:id="4bd2bf85-88d9-4298-a373-5a5e999b6175" />
+		</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="e0057859-6be0-4d28-9ffd-5f4f073d9cd6" type="HTTP:TIMEOUT" >
+			<set-variable value="504" doc:name="httpStatus 504" doc:id="0cc2ee9b-04b1-4760-a6d1-93305a231978" variableName="httpStatus" />
+			<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  errorCode: 504,&#10;  errorMessage: &quot;Gateway Timeout Error&quot;,&#10;  errorDescription: error.detailedDescription,&#10;  timestamp: now() as String {format: &quot;yyyy-MM-dd'T'HH:mm:ssZ&quot;}&#10;}]" doc:name="Gateway Timeout Error" doc:id="2e7b6e41-4ed2-4053-b593-5044b201c3b9" />
+		</on-error-propagate>
+        
+</error-handler>
+</mule>

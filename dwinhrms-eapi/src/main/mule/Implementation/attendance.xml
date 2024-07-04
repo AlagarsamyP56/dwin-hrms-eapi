@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="attendance_get_totalhours_Flow" doc:id="36f4c9c9-21b3-4889-b34f-0b92c05dda97" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.attendance.request.attendance.totalhours.method'),&#10;	&quot;host&quot; : p('http.attendance.request.host'),&#10;	&quot;basepath&quot; : p('http.attendance.request.basepath'),&#10;	&quot;path&quot; : p('http.attendance.request.attendance.totalhours.path'),&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID',&#10;	&quot;Date&quot; : attributes.queryParams.'Date'&#10;}]" doc:name="request for get totalHours" doc:id="2a495111-068c-42d0-bad7-eed2af8bc999" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="29784104-938e-4012-adec-4d291d4ae84f" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="attendance_post_entry_flow" doc:id="0082d515-ec6b-4e89-8b55-bed2cbd7e1d4" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.attendance.request.attendance.entry.method'),&#10;	&quot;host&quot; : p('http.attendance.request.host'),&#10;	&quot;basepath&quot; : p('http.attendance.request.basepath'),&#10;	&quot;path&quot; : p('http.attendance.request.attendance.entry.path')&#10;	&#10;}]" doc:name="request for post entry" doc:id="7911a9c8-06b3-4ee1-82ad-0484551c93e1" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="084a3335-a5b2-42fd-9a90-6ba5498848cc" name="global-requestSub_Flow" />
+	</sub-flow>
+</mule>

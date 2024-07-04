@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="post_applyLeave_flow" doc:id="25b59df5-0f4b-4971-8165-709ef818ce93" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.leave.request.applyLeave.method'),&#10;	&quot;host&quot; : p('http.leave.request.host'),&#10;	&quot;basepath&quot; : p('http.leave.request.basepath'),&#10;	&quot;path&quot; : p('http.leave.request.applyLeave.path')&#10;	&#10;}]" doc:name="request for post apply leave" doc:id="b5bf1ecb-25b5-43f7-afe3-0b2c1d323178" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="d6f91b26-66ab-4465-b0e5-5e122e87c5f2" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_leaveReport_flow" doc:id="89aeb3c1-f02c-4366-9cfb-a5644efb000a" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.leave.request.leaveReport.method'),&#10;	&quot;host&quot; : p('http.leave.request.host'),&#10;	&quot;basepath&quot; : p('http.leave.request.basepath'),&#10;	&quot;path&quot; : p('http.leave.request.leaveReport.path'),&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;	&#10;}]" doc:name="request for get leave report" doc:id="e2f6813d-7f56-48e6-af3f-e55976926a1c" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="2c19494e-653f-47ed-837d-1178d78abb55" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_holidays_flow" doc:id="846b7c58-d790-45f1-92e0-0a79211d7f79" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.leave.request.getHolidays.method'),&#10;	&quot;host&quot; : p('http.leave.request.host'),&#10;	&quot;basepath&quot; : p('http.leave.request.basepath'),&#10;	&quot;path&quot; : p('http.leave.request.getHolidays.path')&#10;	&#10;}]" doc:name="request for get holidays" doc:id="423d3580-d894-42a2-80e5-981f9e2444d2" variableName="request" />
+		<set-variable value='#[%dw 2.0&#10;output application/json&#10;---&#10;if(isEmpty(attributes.queryParams.Date)==false )&#10;{&#10;    "Date" : attributes.queryParams.Date&#10;} else {&#10;    "date" : attributes.queryParams.Date&#10;}]' doc:name="Date" doc:id="cb70ac5a-e888-4e55-9829-a14ed2ea9b04" variableName="Date"/>
+		<flow-ref doc:name="global-request_flow_for_get_holidays" doc:id="3da051cd-27cf-432e-aea5-7447542c4ea7" name="global-request_flow_for_get_holidays" />
+	</sub-flow>
+	<sub-flow name="post_holidays_flow" doc:id="de491a8b-6b26-4162-94e3-f34c8d15cff1" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.leave.request.postHolidays.method'),&#10;	&quot;host&quot; : p('http.leave.request.host'),&#10;	&quot;basepath&quot; : p('http.leave.request.basepath'),&#10;	&quot;path&quot; : p('http.leave.request.postHolidays.path')&#10;	&#10;}]" doc:name="request for post holidays" doc:id="691a9373-a67c-4bd9-acad-3ff940fe0270" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="0dc8e367-859e-4c26-93b2-c2591a6f7181" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_cancelLeave_flow" doc:id="b9fe7989-fb73-400b-9e3a-493567b52958" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.leave.request.cancelLeave.method'),&#10;	&quot;host&quot; : p('http.leave.request.host'),&#10;	&quot;basepath&quot; : p('http.leave.request.basepath'),&#10;	&quot;path&quot; : p('http.leave.request.cancelLeave.path'),&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID',&#10;	&quot;fromDate&quot; : attributes.queryParams.'fromDate',&#10;	&quot;toDate&quot; : attributes.queryParams.'toDate'&#10;	&#10;}]" doc:name="request for delete cancelLeave by employeeID" doc:id="f88de568-0020-44a0-8988-df0c86a9e421" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="ff2404dc-40dc-43fb-b4ab-223cf5bf02b7" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_totalLeave_flow" doc:id="ab357dd1-e6c6-43c4-93af-d514cdd63702" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.leave.request.getTotalLeave.method'),&#10;	&quot;host&quot; : p('http.leave.request.host'),&#10;	&quot;basepath&quot; : p('http.leave.request.basepath'),&#10;	&quot;path&quot; : p('http.leave.request.getTotalLeave.path')&#10;	&#10;}]" doc:name="request for get totalLeaves" doc:id="2265d189-f42d-4b6c-8feb-589136b5acda" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="5dbdb537-9a33-4bd6-82c2-d43567ebf4ea" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="put_totalLeave_flow" doc:id="95164070-73b9-4d95-a9ea-52831b37f5b3" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.leave.request.putTotalLeave.method'),&#10;	&quot;host&quot; : p('http.leave.request.host'),&#10;	&quot;basepath&quot; : p('http.leave.request.basepath'),&#10;	&quot;path&quot; : p('http.leave.request.putTotalLeave.path')&#10;	&#10;}]" doc:name="request for update totalLeaves" doc:id="b9f81dec-d4c7-4097-b74b-5a0b4f509767" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="54e7f95b-2925-4b51-b303-bc75a7ead3a5" name="global-requestSub_Flow" />
+	</sub-flow>
+</mule>

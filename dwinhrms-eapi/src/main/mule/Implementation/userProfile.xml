@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<sub-flow name="get_payrollInformation_flow" doc:id="7e042225-c6ba-4a9e-8484-17f8f793fd24" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.payrollInfo_path')	&#10;	&#10;}]" doc:name="request for get payroll Information" doc:id="ac017fb9-ebff-45cd-b513-d8014251fd8c" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="23c4cc56-bec7-4365-aff0-42155fa4741d" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_payrollInformation_flow" doc:id="e70ec2b9-4745-4159-b8f4-0b75c49bb540" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.payrollInfo_path')&#10;}]" doc:name="request for post payroll Information" doc:id="69b8b40a-970c-44ae-8939-694fa89fd06a" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="660f6ef5-0c2a-4e28-8382-ef8daf9065db" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_payrollInformation_Emp_ID_flow" doc:id="882a0bb6-a0a8-459a-9d47-d9aed12fac71" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.payrollInfo_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get payroll Information by EmpID" doc:id="b500fde4-6437-4f1e-ac3c-b1140ff6bd3d" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="617a2d2f-c21a-4327-b6db-15f4767a9614" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_payrollInformation_Emp_ID_flow" doc:id="55136ffe-b4b6-4039-968f-57cb03363978" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.payrollInfo_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update payroll Information by EmpID" doc:id="fd93b0be-6423-4e6a-8bad-078ff6ac76c2" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="ee0e3de8-ba38-4e46-9189-02563e05e1d5" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_payrollInformation_Emp_ID_flow" doc:id="b5d68540-881e-419e-9281-d8602f43348f" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.payrollInfo_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for delete payroll Information by EmpID" doc:id="fb6a3a7a-6061-4ee0-9e47-55584f30a036" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="2a2825ee-db54-4a72-8a5e-96908f814c38" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_identityInformation_flow" doc:id="882cbcd2-55d2-4e1e-824b-ca90804eac7b" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.identityInfo_path')	&#10;	&#10;}]" doc:name="request for get identityInformation" doc:id="4944e24b-ea3a-465d-a718-02f4698e504e" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="45ab3560-e645-4630-b512-e64edd096dcd" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_identityInformation_flow" doc:id="e8070f3d-c707-4fd0-819b-26506871c8b5" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.identityInfo_path')&#10;}]" doc:name="request for post identityInformation" doc:id="29ecbdae-91bb-4c53-835d-9e085a26fac5" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="0f614be9-a5db-4205-81a6-ad45a6442b3f" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_identityInformation_Emp_ID_flow" doc:id="27b937f1-8f9d-4529-b010-de65784b352a" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.identityInfo_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get identity Information by EmpID" doc:id="a94dd34f-d546-4f24-950d-2fc8a70a34e2" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="a9500567-48d1-4537-ab7a-933b67c79450" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_identityInformation_Emp_ID_flow" doc:id="addd3168-9cc5-4905-8abf-2a83ae3108c1" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.identityInfo_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update identity Information by EmpID" doc:id="8d706983-1371-42a1-ba41-4302276ea728" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="ae735b79-7e12-48db-a35c-f3ebacf67c07" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_identityInformation_Emp_ID_flow" doc:id="57add78b-986e-4982-bf1f-2cbde1fc4972" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.identityInfo_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for deleteidentity Information by EmpID" doc:id="8c8d4deb-ef28-4a30-b0ed-6b380c0051d4" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="1d4bcb7b-fd65-44fb-8681-7b96c513ff9f" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_personalDetails_flow" doc:id="e7da5011-6502-4119-837b-ba65bd7a2689" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.personalDetails_path')	&#10;	&#10;}]" doc:name="request for get personalDetails" doc:id="ae9af836-b374-4e91-9a53-d488cf3ae0d9" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="2b324906-286c-4949-9532-e40dec040611" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_personalDetails_flow" doc:id="c4e9b4aa-2739-4eb4-a1df-9fbf5a2d6252" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.personalDetails_path')&#10;}]" doc:name="request for post personal details" doc:id="9b488d54-c07e-4135-b586-fc6249bbe70f" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="eb512487-6226-4ea0-824c-33d873182362" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_personalDetails_Emp_ID_flow" doc:id="5a3da73f-bd5e-4708-912d-ed568abe3d72" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.personalDetails_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get personal details by EmpID" doc:id="41f6a35f-43aa-4d96-812c-4dce99297606" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="30fcfbc0-a10f-4b1c-821f-84ee6de8c266" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_personalDetails_Emp_ID_flow" doc:id="1eaee4ec-0fc3-4cdd-adcd-a3a1b0445d27" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.personalDetails_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update personal details by EmpID" doc:id="eadce30a-f54b-4254-aa63-c6ac318527a6" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="5c8fad60-530d-4666-abb0-28467b260f24" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_personalDetails_Emp_ID_flow" doc:id="667f0051-7200-4979-867a-45ee4dc07548" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.personalDetails_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for delete personal details by EmpID" doc:id="5e6c4601-07d2-404f-b684-0c58b37d867e" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="3f16e4f6-4a7c-4021-a64b-fd6e358b8c5e" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_professionalReferences_flow" doc:id="e86006a8-21e2-431d-af4b-eef6b86d67f3" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.professionalReferences_path')	&#10;	&#10;}]" doc:name="request for get professionalReferences" doc:id="244ab164-0318-4abb-a353-334efea34e99" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="90125a5d-cb94-46e4-a37c-7205845603db" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_professionalReferences_flow" doc:id="471da677-c0d3-4b81-8879-5fbed9d6a165" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.professionalReferences_path')&#10;}]" doc:name="request for post professional references" doc:id="b78c2f81-be5c-4250-9a70-f8ec3cf8ec29" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="6b148e3c-2903-4c31-be29-5b9c13a85728" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_professionalReferences_Emp_ID_flow" doc:id="501bf6fe-650c-4fe4-bd47-daa29a3cdd00" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.professionalReferences_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get professional references by EmpID" doc:id="1f5f90b0-12ec-40ce-b28f-11ff54847cf3" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="b37a0c33-5a5f-4c38-9b25-261c6976dfd5" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_professionalReferences_Emp_ID_flow" doc:id="435db939-19eb-47d1-98bb-2eeb5bc9aa75" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.professionalReferences_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update professional references by EmpID" doc:id="6f04645b-4411-4c03-85c7-c21901cf2273" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="5e36a5a4-710a-4e65-9321-d0190199cbb8" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_professionalReferences_Emp_ID_flow" doc:id="8e028a15-5839-45f8-a29f-9e2351e519fc" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.professionalReferences_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for delete professional references by EmpID" doc:id="8fc1d395-a364-46ee-b4dc-235541503b0c" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="d6a43d77-3f82-4c06-8d4e-d7f229819830" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_emergencyDetails_flow" doc:id="442d7d1c-50bc-473b-a7d7-946e0f800494" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.emergencyDetails_path')	&#10;	&#10;}]" doc:name="request for get emergency details" doc:id="dae55b3c-1813-4fff-a062-1f8c5cd5d5b5" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="0c39bd0a-5208-40a8-9f86-68978d03d6ef" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_emergencyDetails_flow" doc:id="c06e8a16-9cdd-44a0-812a-0f7fc951bcd1" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.emergencyDetails_path')&#10;}]" doc:name="request for post emergency details" doc:id="aee663cc-a138-43b6-9d6e-04dd7220f715" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="c3f44801-14fb-4e44-a27e-a177846ed185" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_emergencyDetails_Emp_ID_flow" doc:id="7fe67151-0131-4829-a23d-2576cf1916ae" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.emergencyDetails_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get emergency details by EmpID" doc:id="12cf5b81-7728-4ae8-ba06-d8d7b6994ede" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="c3a6ace9-f2f6-46a3-be19-f218c6a8cb41" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_emergencyDetails_Emp_ID_flow" doc:id="5ed17ed2-e5d5-4761-8359-7f527b3bfae1" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.emergencyDetails_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update emergency details by EmpID" doc:id="6039912a-2646-46f1-be08-04562e2efc1d" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="f6a796f0-06de-46c4-9291-30d3f8792e9d" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_emergencyDetails_Emp_ID_flow" doc:id="3302de25-8217-45d6-b0f3-176993209f6c" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.emergencyDetails_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for delete emergency details by EmpID" doc:id="d5e6c554-f487-41fe-953f-6bcfb1bab4a8" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="d67106ba-6472-4698-9ec0-3f6806bf3b96" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_hierarchyInformation_flow" doc:id="e0122e98-4463-46dc-9a4b-2f4295b29605" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.hierarchyInformation_path')	&#10;	&#10;}]" doc:name="request for get hierarchy Information" doc:id="e7c2ae53-f263-41f8-87c2-34e48c1c9a53" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="9d6ff124-e07e-4d57-8a29-61c5b735d381" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_hierarchyInformation_flow" doc:id="c4d1a41a-630d-4799-bad1-5ef78420fb7a" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.hierarchyInformation_path')&#10;}]" doc:name="request for post hierarchy Information" doc:id="3442de93-8267-4749-b85f-3fe98a6436ec" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="9fd91929-c5dc-47e9-b235-5bbcbae2a4ed" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_hierarchyInformation_Emp_ID_flow" doc:id="cfe3aa21-a438-47fb-8697-626666c15384" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.hierarchyInformation_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get hierarchy Informations by EmpID" doc:id="c87398ad-e022-4e9b-bba2-2ab6f42c6e56" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="64730199-df6e-41bf-8111-2ad4c594300e" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_hierarchyInformation_Emp_ID_flow" doc:id="3e28cc07-70ef-42f1-b95e-cf4ea58ec784" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.hierarchyInformation_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update hierarchy Information by EmpID" doc:id="b4452f9c-fa88-438b-8e20-d4f1f4346900" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="e74d8b59-ef07-44b9-a4a1-979b49fc5b29" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_hierarchyInformation_Emp_ID_flow" doc:id="85210826-ab39-4900-8768-6b2ec818d976" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.hierarchyInformation_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for delete hierarchy Information by EmpID" doc:id="dd384922-9468-4681-a03e-0a160434db97" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="cce683cc-29de-48ce-b644-489cc3b2af81" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_workInformation_flow" doc:id="730bfd1a-ecc5-429f-a105-22b1ba483220" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.workInformation_path')	&#10;	&#10;}]" doc:name="request for get work Information" doc:id="4defa9c0-757d-4fd7-a3f6-8ed8d2d261e1" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="fc7cbb3f-264f-4106-981f-e50a3cd4d081" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_workInformation_flow" doc:id="c4a9af0a-76ce-41ff-8365-e32e54650112" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.workInformation_path')&#10;}]" doc:name="request for post work Information" doc:id="c1481860-3ea2-4b99-b9a6-946d346289a2" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="f12fd2a1-48f0-4470-afb1-db422b7ceaa8" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_workInformation_Emp_ID_flow" doc:id="ecb0e36a-4058-4682-97bc-519932b506f0" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.workInformation_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get work Information by EmpID" doc:id="f23d4519-26d6-425d-95d7-02f39950943f" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="75590d9f-adcc-441f-b6ef-6b08101ef4e6" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_workInformation_Emp_ID_flow" doc:id="b4dd34ac-8c45-4fff-b3d5-2010ff4d9ee5" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.workInformation_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update work Information by EmpID" doc:id="1e48cc98-e058-41d8-be5e-63f75794743d" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="c5e87514-df67-492d-9e2a-fe4a9fad7c71" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_workInformation_Emp_ID_flow" doc:id="6ce0d66d-7ad6-4a22-a1de-bb7e346eb59f" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.workInformation_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for delete work Information by EmpID" doc:id="0deff1d9-3be7-4981-be78-36ec3c56cb38" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="d595359b-ff5c-4ce9-8055-828d22cc4183" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_supportingDocuments_flow" doc:id="ac57af46-60ff-4d09-a16d-38ed448b7d21" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.supportingDocuments_path')	&#10;	&#10;}]" doc:name="request for get supporting documents" doc:id="3ee5a525-c585-484d-b965-d9fd1271f03f" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="fcf4b23a-1576-4e8b-8eb4-9fadba7654de" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_supportingDocuments_flow" doc:id="b4676c21-f0c3-425e-bd00-5c767d47a6c0" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.supportingDocuments_path')&#10;}]" doc:name="request for post supporting documents" doc:id="cdb13705-918c-4a86-bd33-61e53acef613" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="7b03d4e6-1a82-4413-953b-1b4d8ab7399a" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_supportingDocuments_Emp_ID_flow" doc:id="989326a9-3727-4b8d-a90b-b8ecef455c43" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.supportingDocuments_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get supporting documents by EmpID" doc:id="c2dee8b5-c58e-432e-9b21-a3ade93c9ff1" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="513b8454-f817-4882-8cfb-0fa49773ecb7" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_supportingDocuments_Emp_ID_flow" doc:id="e55bfaba-a153-4512-a150-929e4d0bc5bf" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.supportingDocuments_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update supporting documents by EmpID" doc:id="2d1025be-43e5-4031-867a-79141dc3dc78" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="f0f1ea66-f7f5-4e4e-81a8-bc1735ee9ba6" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_supportingDocuments_Emp_ID_flow" doc:id="57b5d158-5bd6-445f-822a-4a4198d69a75" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.supportingDocuments_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for delete supporting documents by EmpID" doc:id="dcf481d8-df3a-4c5a-a655-7cad5e4b05f3" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="ee90a14f-44f7-4b0f-9529-4f1ae97188da" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_profileImage_flow" doc:id="1e445aa9-0ad8-461f-a6e5-e661b16874e3" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.profileImage_path')	&#10;	&#10;}]" doc:name="request for get profile image" doc:id="5f155e5b-9dbf-491b-a271-66b0016166fb" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="79c57b82-7bc7-422e-ba03-426b0475e541" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="post_profileImage_flow" doc:id="dc82c093-15d9-4b32-9dfc-501a7c57662f" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.post_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.profileImage_path')&#10;}]" doc:name="request for post profile image" doc:id="997a0a69-2cd1-463f-aebe-9eadb421597c" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="06f7758a-701b-4839-adc7-d442348ca0cb" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="get_profileImage_Emp_ID_flow" doc:id="51c52ea8-a3c4-4c2e-85b4-1d65071260c8" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.get_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.profileImage_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for get profile image by EmpID" doc:id="c0f3afae-05f4-4893-bcb2-26d4c70aef00" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="d8278435-9481-4d0b-90e0-2e8760654e3e" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="patch_profileImage_Emp_ID_flow" doc:id="06692979-7d4c-4ff9-a6b4-49bc9ab88921" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.patch_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.profileImage_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for update profile image by EmpID" doc:id="28dff94a-459d-4f09-a1ba-58adb808f116" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="8a6c035c-617c-4bbe-bf21-90bca9ea9684" name="global-requestSub_Flow" />
+	</sub-flow>
+	<sub-flow name="delete_profileImage_Emp_ID_flow" doc:id="d0c9fbbd-fa34-4037-ab57-575a64df28b3" >
+		<set-variable value="#[{&#10;	&quot;method&quot; : p('http.userProfile.request.delete_method'),&#10;	&quot;host&quot; : p('http.userProfile.request.host'),&#10;	&quot;basepath&quot; : p('http.userProfile.request.basepath'),&#10;	&quot;path&quot; : p('http.userProfile.request.profileImage_empId_path'),	&#10;	&quot;EmployeeID&quot; : attributes.uriParams.'EmployeeID'&#10;}]" doc:name="request for delete profile image by EmpID" doc:id="075cce63-8c9b-4df1-a2c6-d1815f75b83a" variableName="request" />
+		<flow-ref doc:name="global-requestSub_Flow" doc:id="638bd23d-cad7-4d67-b787-43aa3474b185" name="global-requestSub_Flow" />
+	</sub-flow>
+</mule>

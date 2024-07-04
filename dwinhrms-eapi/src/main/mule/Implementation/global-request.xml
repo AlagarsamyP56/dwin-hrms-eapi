@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<sub-flow name="global-requestSub_Flow" doc:id="1f80d8bb-e90c-4ece-8e0e-206bf48583f2" >
+		<logger level="INFO" doc:name="Started request flow" doc:id="c434aad4-23c8-45e1-85cb-59eb9c2eef8d" message='#["Logging initiated for the request to http://" ++ vars.request.host ++ vars.request.basepath ++ vars.request.path ++ " to get total hours"]'/>
+		<http:request method="#[vars.request.method]" doc:name="Global Request" doc:id="19b57bc5-8ebc-4cd0-a296-8aed21a8a16d" config-ref="hrms-eapi_http_Request_configuration" path="#[vars.request.path]">
+			<http:uri-params><![CDATA[#[output application/json
+---
+{
+	"EmployeeID" : vars.request.EmployeeID default ""
+}]]]></http:uri-params>
+			<http:query-params><![CDATA[#[output application/json
+---
+{
+	"Date" : vars.request.Date default "",
+	"fromDate" : vars.request.fromDate default "",
+	"toDate" : vars.request.toDate default ""
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="completed request flow" doc:id="62a511c9-221d-4d37-8f37-0296b71efb57" message='#["Logging completed for the request to http://" ++ vars.request.host ++ vars.request.basepath ++ vars.request.path ++ " to get total hours"]'/>
+	</sub-flow>
+	<sub-flow name="global-request_flow_for_get_holidays" doc:id="46f09e25-32c7-493c-835a-cd50ae44b7f3" >
+		<logger level="INFO" doc:name="Started request flow" doc:id="113938a0-5e21-4111-b7fe-7f980b869867" message="Started request flow" />
+		<http:request method="#[vars.request.method]" doc:name="Global Request" doc:id="bda1c2a4-601f-4e12-ba91-e5cef90d822d" config-ref="hrms-eapi_http_Request_configuration" path="#[vars.request.path]" >
+			<http:uri-params ><![CDATA[#[output application/json
+---
+{
+	"EmployeeID" : vars.request.EmployeeID default ""
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/json
+---
+vars.Date]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="completed request flow" doc:id="2a90a5d1-8aea-4b70-bbcf-aeea9b5ae064" message="completed request flow" />
+	</sub-flow>
+</mule>

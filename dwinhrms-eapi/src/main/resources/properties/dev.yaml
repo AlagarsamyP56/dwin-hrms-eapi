@@ -1,0 +1,99 @@
+http.listener:
+ host : "0.0.0.0"
+ port : "8081"
+ path : "/api/*"
+ timeout : "30000"
+
+##follwing config details for API_Instance_ID ##
+API_Instance_ID : "19611040"
+
+##follwing config details for User sign-in/sign-up ##
+http.hr.request:
+  host : "humanresources-papi.us-e2.cloudhub.io"
+  basepath : "/api"
+  resendOTP:
+    method : "POST"
+    path : "/resend"
+  signin:
+    method : "POST"
+    path : "/signin"
+    forgotPassword:
+      method : "PATCH"
+      path : "/signin/forgotPassword"
+      OTP:
+        method : "POST"
+        path : "/signin/forgotPasswordOTP"
+  signup:
+   method : "POST"
+   path : "/signup"
+   OTP:
+     method : "POST"
+     path : "/signup/signupOTP"
+     
+##follwing config details for attendance tracker ##
+http.attendance.request:
+  host : "attendance-papii.us-e2.cloudhub.io"
+  basepath : "/api"
+  attendance:
+    totalhours:
+      method : "GET"
+      path : "/attendance/totalHours/{EmployeeID}"
+    entry:
+      method : "POST"
+      path : "/attendance/entry"
+##follwing config details for leave tracker ##
+http.leave.request:
+  host : "leavetracker-papi.us-e2.cloudhub.io"
+  basepath : "/api"
+  applyLeave :
+    method : "POST"
+    path : "/Leave/addLeave"
+  leaveReport:
+    method : "GET"
+    path : "/Leave/leaveReport/{EmployeeID}"
+  postHolidays:
+    method : "POST"
+    path : "/Leave/holidays"
+  getHolidays:  
+    method : "GET"
+    path : "/Leave/holidays"
+  cancelLeave:
+    method : "DELETE"
+    path : "/Leave/cancelLeave/{EmployeeID}"
+  getTotalLeave:
+    method : "GET"
+    path : "/Leave/totalLeave"
+  putTotalLeave:
+    method : "PUT"
+    path : "/Leave/totalLeave"
+##follwing config details for user profile ##
+http.userProfile.request:
+  host : "user-profile-papi.us-e2.cloudhub.io"
+  basepath : "/api/user-profile"
+  get_method : "GET"
+  post_method : "POST"
+  patch_method : "PATCH"
+  delete_method : "DELETE"
+  payrollInfo_path : "/payrollInformation"
+  payrollInfo_empId_path: "/payrollInformation/{EmployeeID}"    
+  identityInfo_path : "/identityInformation"
+  identityInfo_empId_path : "/identityInformation/{EmployeeID}" 
+  personalDetails_path : "/personalDetails"
+  personalDetails_empId_path : "/personalDetails/{EmployeeID}" 
+  professionalReferences_path : "/professionalReferences"
+  professionalReferences_empId_path : "/professionalReferences/{EmployeeID}"
+  emergencyDetails_path : "/emergencyDetails"
+  emergencyDetails_empId_path : "/emergencyDetails/{EmployeeID}"
+  hierarchyInformation_path : "/hierarchyInformation"
+  hierarchyInformation_empId_path : "/hierarchyInformation/{EmployeeID}"
+  workInformation_path : "/workInformation"
+  workInformation_empId_path : "/workInformation/{EmployeeID}"
+  supportingDocuments_path : "/supportingDocuments"
+  supportingDocuments_empId_path : "/supportingDocuments/{EmployeeID}"
+  profileImage_path : "/profileImage"
+  profileImage_empId_path : "/profileImage/{EmployeeID}"     
+                        
+                              
+                                    
+                                          
+                                                      

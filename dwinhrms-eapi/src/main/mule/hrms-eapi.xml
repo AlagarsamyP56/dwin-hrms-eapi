@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+    
+    <flow name="hrms-eapi-main">
+		<http:listener config-ref="hrms-eapi-httpListenerConfig" path="${http.listener.path}">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[%dw 2.0
+output application/json
+---
+{
+  "ErrorType": error.errorType.identifier  ,
+  "Timestamp" : (now() >> "IST" as String {format: "yyyy-MM-dd HH:mm:ss.SSS"}),
+  "Error Description" : error.detailedDescription
+
+}]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+		<apikit:router config-ref="hrms-eapi-config" />
+        <error-handler ref="global-error-handlerError_Handler">
+            
+        </error-handler>
+    </flow>
+    <flow name="put:\Leave\totalLeave:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for update total leave " doc:id="deda93e9-d935-4617-89e0-f70398c1051e" message="Logger initiated for updating total leave"/>
+		<flow-ref doc:name="update_totalLeave_flow" doc:id="519766cf-3fa4-47e4-931a-1697d2b43a87" name="put_totalLeave_flow"/>
+		<logger level="INFO" doc:name="Logger completed for update total leave" doc:id="49347d52-3788-4c21-af67-db0a51acfe18" message="Logger completed for updating total leave"/>
+    </flow>
+    <flow name="delete:\user-profile\profileImage\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete profileImage " doc:id="881d2bce-9211-4eb4-bb20-a00f733f2740" message="Logger initiated for deleting profile image" />
+		<flow-ref doc:name="delete_profileImage_Emp_ID_flow" doc:id="7a435708-5444-4f8b-a50c-5ab33dee62b4" name="delete_profileImage_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete profileImage " doc:id="52e4358e-361f-4abf-bcc7-2e5680781f97" message="Logger completed for deleting profile image" />
+    </flow>
+    <flow name="delete:\user-profile\workInformation\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete work information " doc:id="c6408d4a-e909-4f6f-add5-481d713c5c40" message="Logger initiated for deleting work information  " />
+		<flow-ref doc:name="delete_profileImage_Emp_ID_flow" doc:id="4c84f4e7-c6ea-4c23-b514-e139667e6eb3" name="delete_profileImage_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete work information " doc:id="7e515805-8d63-4f88-b29c-837284b71c25" message="Logger completed for deleting work information  " />
+    </flow>
+    <flow name="delete:\Leave\cancelLeave\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete leave by empId" doc:id="1819e448-b25f-41ef-9451-c604e1cb09ce" message="Logger initiated for deleting leave by employee Id"/>
+		<flow-ref doc:name="delete_cancelLeave_flow" doc:id="0e969ee2-412a-4bf8-a0ca-b64d65ac5468" name="delete_cancelLeave_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete leave by empId" doc:id="6ff17670-a31c-4fe1-8bd2-6c83d3045ec3" message="Logger completed for deleting leave by employee Id"/>
+    </flow>
+    <flow name="delete:\user-profile\payrollInformation\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete payroll info by EmpId" doc:id="6bcc27cb-430f-4d03-a89b-3b1881b9054e" message="Logger initiated for deleting payroll information by employee Id" />
+		<flow-ref doc:name="delete_payrollInformation_Emp_ID_flow" doc:id="c0a9c31b-e8fd-4e37-a93e-d8a3250d3efc" name="delete_payrollInformation_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete payroll info by EmpId" doc:id="fa7cedc6-a9b4-4924-b41e-b91feebf595d" message="Logger completed for deleting payroll information by employee Id" />
+    </flow>
+    <flow name="delete:\user-profile\professionalReferences\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete professional references by EmpId" doc:id="b1dbf87a-ad1b-4862-b3d1-ab00b3e33662" message="Logger initiated for deleting professional references information by employee Id" />
+		<flow-ref doc:name="delete_professionalReferences_Emp_ID_flow" doc:id="3bec73d0-7532-4750-9b4b-f1bda1706d2e" name="delete_professionalReferences_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete professional references by EmpId" doc:id="ef613312-683f-4989-990e-59f18e9e7c7a" message="Logger completed for deleting professional references information by employee Id" />
+    </flow>
+    <flow name="delete:\user-profile\hierarchyInformation\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete hierarchy Info by EmpId" doc:id="2797bb35-afc5-4f2b-b563-d5ee67c4ffbc" message="Logger initiated for deleting hierarchy information by employee Id" />
+		<flow-ref doc:name="delete_hierarchyInformation_Emp_ID_flow" doc:id="dd7c150e-e02f-4c20-950b-1c4c3d74bb58" name="delete_hierarchyInformation_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete hierarchy Info by EmpId" doc:id="2a633eff-770f-47f1-9f8d-b7811abb3687" message="Logger completed for deleting hierarchy information by employee Id" />
+    </flow>
+    <flow name="delete:\user-profile\supportingDocuments\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete supporting details by EmpId" doc:id="1e1e9c5c-ce83-4920-b88f-fcac6408a0b8" message="Logger initiated for deleting supporting documents by employee Id" />
+		<flow-ref doc:name="delete_supportingDocuments_Emp_ID_flow" doc:id="4cb38f93-130f-400f-b7be-d87a650b8030" name="delete_supportingDocuments_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete supporting details by EmpId" doc:id="c50656c2-b2f9-4924-81e4-4ff122f08fc3" message="Logger completed for deleting supporting documents by employee Id" />
+    </flow>
+    <flow name="delete:\user-profile\emergencyDetails\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete emergency details by EmpId" doc:id="2bc725a4-e5f8-466d-a9e6-6834dca916e7" message="Logger initiated for deleting supporting documents by employee Id" />
+		<flow-ref doc:name="delete_emergencyDetails_Emp_ID_flow" doc:id="46774a3c-1b9f-4364-999b-cf47bda33541" name="delete_emergencyDetails_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete emergency details by EmpId" doc:id="0c584a91-b7c6-4bb9-9dc8-d1d7e2a48c23" message="Logger completed for deleting supporting documents by employee Id" />
+    </flow>
+    <flow name="delete:\user-profile\personalDetails\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete personal details by EmpId" doc:id="def33bc0-4272-4c6b-b94b-39e80c322242" message="Logger initiated for deleting personal details by employee Id" />
+		<flow-ref doc:name="delete_personalDetails_Emp_ID_flow" doc:id="456b2e64-5749-496c-a0ff-9c6ca22f7d11" name="delete_personalDetails_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete personal details by EmpId" doc:id="09dc4f42-2a92-4d2e-8fd9-a1b78a579420" message="Logger completed for deleting personal details by employee Id" />
+    </flow>
+    <flow name="delete:\user-profile\identityInformation\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger started  for delete identity Info by EmpId" doc:id="7436aef3-08ec-47da-9023-cfeaa966707d" message="Logger initiated for deleting identity Information details by employee Id" />
+		<flow-ref doc:name="delete_identityInformation_Emp_ID_flow" doc:id="b97424ec-4f9f-4dd7-92a3-1768d977d05b" name="delete_identityInformation_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger completed for delete identity Info by EmpId" doc:id="af32b985-2e36-4186-aae0-7e03374d6e71" message="Logger completed for deleting identity Information details by employee Id" />
+    </flow>
+    <flow name="patch:\signin\forgotPassword:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateSignInPassword_ForgotPassword_Started" doc:id="c5807b05-e5f0-4740-8b54-c566311cda1e" message="Logger initiated for updating sign-in password due to forgotten password"/>
+		<flow-ref doc:name="hr_patch_signin/forgotPassword_flow" doc:id="a06b0ef0-7357-4f3f-93da-64f9fb4cc10b" name="hr_patch_signin_forgotPassword_flow"/>
+		<logger level="INFO" doc:name="Logger_UpdateSignInPassword_ForgotPassword_Finished" doc:id="a7bc794c-babf-4d18-aed9-4445826267f2" message="Logger completed for updating sign-in password due to forgotten password"/>
+    </flow>
+    <flow name="patch:\user-profile\professionalReferences\(EmployeeID):application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateUserProfessionalReferencesByEmpId_Started" doc:id="5c259fb4-ecdc-4e29-abd7-46c4ed50f097" message="Logger initiated for updating user professional references by Employee Id" />
+		<flow-ref doc:name="patch_professionalReferences_Emp_ID_flow" doc:id="34957acf-07d6-45bd-8257-706cca95becd" name="patch_professionalReferences_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_UpdateUserProfessionalReferencesByEmpId_Finished" doc:id="f925bc04-9b99-4b21-b2d5-203b259aab43" message="Logger completed for updating user professional references by Employee Id" />
+    </flow>
+    <flow name="patch:\user-profile\hierarchyInformation\(EmployeeID):application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateUserHierarchyByEmployeeId_Started" doc:id="1fe8fca3-3f15-4a64-83a5-f5479bee1935" message="Logger initiated for updating user hierarchy information by Employee ID" />
+		<flow-ref doc:name="patch_hierarchyInformation_Emp_ID_flow" doc:id="12aaa3a6-6c49-46b2-98f7-58edee6aacc7" name="patch_hierarchyInformation_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_UpdateUserHierarchyByEmployeeId_Finished" doc:id="9c9fb1b5-4a39-4212-8200-1274fddcb45a" message="Logger completed for updating user hierarchy information by Employee ID" />
+    </flow>
+    <flow name="patch:\user-profile\workInformation\(EmployeeID):application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_Update_WorkInfo_ByEmployeeId_Started" doc:id="425c25f2-5abd-4951-9b52-632b73d2212a" message="Logger initiated for updating user work information by Employee ID" />
+		<flow-ref doc:name="patch_workInformation_Emp_ID_flow" doc:id="28596ff6-b594-4aaa-b57e-801eeb020501" name="patch_workInformation_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_Update_WorkInfo_ByEmployeeId_Completed" doc:id="a02d61e7-ffd2-4d9e-9c7b-644f62314a7b" message="Logger completed for updating user work information by Employee ID" />
+    </flow>
+    <flow name="patch:\user-profile\payrollInformation\(EmployeeID):application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateUser_payrollInfo_ByEmployeeId_Started" doc:id="e8ed325d-08e8-4a12-9584-9bb13fe5e5f6" message="Starting logger for update payroll   Info by EmpId" />
+		<flow-ref doc:name="patch_payrollInformation_Emp_ID_flow" doc:id="17c2108c-f01b-45e9-b5d9-76c5f1be0948" name="patch_payrollInformation_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_Update_User_payrollInfo_ByEmployeeId_Completed" doc:id="d2cad43f-c942-4e46-a26a-fe672079d80e" message="Logger completed for updating user payroll information by Employee ID" />
+    </flow>
+    <flow name="patch:\user-profile\identityInformation\(EmployeeID):application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateUser_identityInfo_ByEmployeeId_Started" doc:id="9940c5d0-8709-45d8-b1a9-c68b503a99af" message="Logger initiated for updating user identity information by Employee ID" />
+		<flow-ref doc:name="patch_identityInformation_Emp_ID_flow" doc:id="a5adeddc-13ce-479b-aafe-ee531bc4e8fd" name="patch_identityInformation_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_UpdateUser_identityInfo_ByEmployeeId_Finished" doc:id="3ff237d1-065d-4cf2-a8d6-e095324e38b2" message="Logger completed for updating user identity information by Employee ID" />
+    </flow>
+    <flow name="patch:\user-profile\emergencyDetails\(EmployeeID):application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateUser_emergencyDetails_ByEmployeeId_Started" doc:id="96f306b1-b1c1-4a7d-b000-c9019c9ac108" message="Logger initiated for updating user emergency details by Employee ID" />
+		<flow-ref doc:name="patch_emergencyDetails_Emp_ID_flow" doc:id="7d5da265-c797-4548-b56b-b673aab4a6ad" name="patch_emergencyDetails_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_UpdateUser_emergencyDetails_ByEmployeeId_Finished" doc:id="29dbba28-261b-4f2b-aef7-1016e23ff256" message="Logger completed for updating user emergency details  by Employee ID" />
+    </flow>
+    <flow name="patch:\user-profile\personalDetails\(EmployeeID):application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateUser_personalDetails_ByEmployeeId_Started" doc:id="fe0739f4-4d80-4d12-999c-daacd40d66b9" message="Logger initiated for updating user persnal details by Employee ID"/>
+		<flow-ref doc:name="patch_personalDetails_Emp_ID_flow" doc:id="b85b8b45-71f4-4cbb-85b5-1afca7d7fc7b" name="patch_personalDetails_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_UpdateUser_personaldetails_ByEmployeeId_Finished" doc:id="af224386-415b-4632-8cf1-fec14173709b" message="Logger completed for updating user personal details by Employee ID" />
+    </flow>
+    <flow name="patch:\user-profile\profileImage\(EmployeeID):multipart\form-data:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateUser_profileImage_ByEmployeeId_Started" doc:id="5be56399-9c6c-48b8-945c-f22b6b21ed97" message="Logger initiated for updating user profile image by Employee ID" />
+		<flow-ref doc:name="patch_profileImage_Emp_ID_flow" doc:id="97de8484-1df7-4aff-8824-b3ea2e01e06f" name="patch_profileImage_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_UpdateUser_profileImage_ByEmployeeId_Finished" doc:id="4585cd20-fd8c-4e18-b8d8-fc74a8796526" message="Logger completed for updating user profile image by Employee ID" />
+    </flow>
+    <flow name="patch:\user-profile\supportingDocuments\(EmployeeID):multipart\form-data:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_UpdateUser_supportingDocuments_ByEmployeeId_Started" doc:id="70e3d220-b1f5-429b-bed0-3bbaf8746f72" message="Logger initiated for updating user supporting documents by Employee ID"/>
+		<flow-ref doc:name="patch_supportingDocuments_Emp_ID_flow" doc:id="c82ea518-c35d-445b-93e1-cbbe0fe162af" name="patch_supportingDocuments_Emp_ID_flow"/>
+		<logger level="INFO" doc:name="Logger_UpdateUser_supportingDocuments_ByEmployeeId_Finished" doc:id="e8fbde5e-b621-4e9a-8b02-2dd9e50d026d" message="Logger completed for updating user supporting documents by Employee ID"/>
+    </flow>
+    <flow name="get:\user-profile\emergencyDetails:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserEmergencyDetails_Started" doc:id="1197e3e0-753c-42bc-b028-d5f86c472789" message="Logger initiated for retrieving user emergency details" />
+		<flow-ref doc:name="get_emergencyDetails_flow" doc:id="333e861e-0714-48ef-bc36-31dd4dee88be" name="get_emergencyDetails_flow"/>
+		<logger level="INFO" doc:name="Logger_GetUserEmergencyDetails_Finished" doc:id="b730ac78-54cb-4b5d-bb5b-40159041ee13" message="Logger completed for retrieving user emergency details" />
+    </flow>
+    <flow name="get:\user-profile\hierarchyInformation:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserHierarchy_Started" doc:id="5f95ec46-e429-4dd1-9b12-717ac9a43b8a" message="Logger initiated for getting user hierarchy information" />
+		<flow-ref doc:name="get_hierarchyInformation_flow" doc:id="37b081ba-a6d6-4aac-9bf3-39b385f6d104" name="get_hierarchyInformation_flow"/>
+		<logger level="INFO" doc:name="Logger_GetUserHierarchy_Finished" doc:id="b0172def-7b3e-4672-aea2-37540cc5ad23" message="Logger completed for getting user hierarchy information" />
+    </flow>
+    <flow name="get:\Leave\holidays:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserLeaveHolidays_Started" doc:id="af9534ac-ebea-4666-9718-259e5ba69b95" message="Logger initiated for retrieving user leave holidays"/>
+		<flow-ref doc:name="get_holidays_flow" doc:id="3ecc8f9a-cb1e-462d-a3f7-9d1ea9698b95" name="get_holidays_flow"/>
+		<logger level="INFO" doc:name="Logger_GetUserLeaveHolidays_Finished" doc:id="4e3c56e0-71c7-4c6f-ae41-513860cdeccd" message="Logger completed for retrieving user leave holidays"/>
+    </flow>
+    <flow name="get:\user-profile\identityInformation:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserProfileIdentity_Initiated" doc:id="643f329f-faf6-402e-a2fd-4e4695dc61cb" message="Logger started for retrieving user-profile identity information"/>
+		<flow-ref doc:name="get_identityInformation_flow" doc:id="e69b2aed-5eb8-4931-a8ac-b9e127f2e43a" name="get_identityInformation_flow"/>
+		<logger level="INFO" doc:name="Logger_GetUserProfileIdentity_Completed" doc:id="d4692755-4381-4a62-be2a-e285ad16fec9" message="Logger completed for retrieving user-profile identity information"/>
+    </flow>
+    <flow name="get:\user-profile\payrollInformation:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserPayrollInformation_Initiated" doc:id="90fcdba2-b701-4790-823b-2e271c4bc833" message="Logger started for retrieving user-profile payroll  information" />
+		<flow-ref doc:name="get_payrollInformation_flow" doc:id="3489aa69-29f6-4e85-8ea7-71c91d8b84d0" name="get_payrollInformation_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserPayrollInformation_completed" doc:id="539f6f25-ecfc-4838-995e-4367fb7f1ccf" message="Logger completed for retrieving user-profile payroll  information" />
+    </flow>
+    <flow name="get:\user-profile\personalDetails:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserPersnalDetails_Initiated" doc:id="b1f22cee-cc6e-4527-b86f-084afb38ea0e" message="Logger started for retrieving user-personal details"/>
+		<flow-ref doc:name="get_personalDetails_flow" doc:id="7e33eea3-596a-45ed-ad1e-41138e43952f" name="get_personalDetails_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserPersnalDetails_completed" doc:id="4e927498-2e9c-459f-a478-bfd3d7f7cf47" message="Logger completed for retrieving user-personal details"/>
+    </flow>
+    <flow name="get:\user-profile\professionalReferences:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserProfilePersonalReferences_started" doc:id="86ccae12-642f-4698-9525-27d8dc436189" message="Logger initiated for retrieving user personal references" />
+		<flow-ref doc:name="get_professionalReferences_flow" doc:id="d156b35a-c2bf-4955-94ad-0b2907bba9d6" name="get_professionalReferences_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserProfilePersonalReferences_finished" doc:id="f64d654f-12fb-4525-8e0a-d8f46bdbd06e" message="Logger completed for retrieving user personal references" />
+    </flow>
+    <flow name="get:\user-profile\profileImage:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserProfileImages_Started" doc:id="897ce1b8-4efa-454b-91c8-008eecb36271" message="Logger initiated for fetching user-profile images"/>
+		<flow-ref doc:name="get_profileImage_flow" doc:id="789730b7-ef5e-4224-94f6-8f500857d264" name="get_profileImage_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserProfileImages_Completed" doc:id="6458fcba-c865-48b5-bcfd-c96e6fefbf1c" message="Logger completed for fetching user-profile images"/>
+    </flow>
+    <flow name="get:\resendOTP:hrms-eapi-config">
+        <logger level="INFO" doc:name="Logger_GetResendOTP_Started" doc:id="a5d9dc2a-9aed-4044-9741-73080657cc5e" message="Logger initiated for getting resend OTP"/>
+		<flow-ref doc:name="hr_get_resendOTP_Flow" doc:id="dc9df22e-093f-4203-b44e-d103a1ddd79e" name="hr_post_resendOTP_Flow"/>
+		<logger level="INFO" doc:name="Logger_GetResendOTP_Completed" doc:id="79daf624-297a-4415-8fce-ae08bbf83ea7" message="Logger completed for getting resend OTP"/>
+    </flow>
+    <flow name="get:\user-profile\supportingDocuments:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserProfileDocs_Started" doc:id="af933c81-1b0e-42b7-b7bd-61134f5fb2dd" message="Logger initiated for retrieving user-profile supporting documents" />
+		<flow-ref doc:name="get_supportingDocuments_flow" doc:id="087e8294-5c2f-4bba-b572-9d8f63d39852" name="get_supportingDocuments_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserProfileDocs_Completed" doc:id="7889380c-616c-4d80-b2bc-64c35e94eedf" message="Logger completed for retrieving user-profile supporting documents" />
+    </flow>
+    <flow name="get:\attendance\totalHours\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetAttendanceTotalHours_Started" doc:id="e375f43b-8d80-4f2e-a196-777eab0e5869" message='#["Logger initiated for retrieving attendance total hours by EmployeeID"]'/>
+		<flow-ref doc:name="attendance_get_totalhours_Flow" doc:id="1160b56f-ef74-4bc5-ba71-bdfc16b3f440" name="attendance_get_totalhours_Flow"/>
+		<logger level="INFO" doc:name="Logger_GetAttendanceTotalHours_Completed" doc:id="6bc8001e-a622-4006-aef5-63bbd87070ba" message='#["Logger completed for retrieving attendance total hours by EmployeeID"]'/>
+    </flow>
+    <flow name="get:\Leave\totalLeave:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetTotalLeaves_Started" doc:id="caf0fc26-b51a-4a44-acb2-51ca213ea8f6" message="Logger initiated for retrieving total leaves"/>
+		<flow-ref doc:name="get_totalLeave_flow" doc:id="b5388834-5fe7-400a-ba5f-f0e167041bba" name="get_totalLeave_flow"/>
+		<logger level="INFO" doc:name="Logger_GetTotalLeaves_Completed" doc:id="a8f0b7ea-d25d-4595-8559-8d64d8584446" message="Logger completed for retrieving total leaves"/>
+    </flow>
+    <flow name="get:\user-profile\workInformation:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserWorkInfo_Started" doc:id="cfff9527-defb-4772-92b2-ac7bdedc0b57" message="Logger initiated for retrieving user work information" />
+		<flow-ref doc:name="get_workInformation_flow" doc:id="938048d8-2000-437f-9b84-eef2e75f52e9" name="get_workInformation_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserWorkInfo_Completed" doc:id="c4cd4712-5620-441a-bf6d-8fcabc4acd63" message="Logger completed for retrieving user work information" />
+    </flow>
+    <flow name="get:\user-profile\profileImage\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserProfileImage_ByEmployeeID_Started" doc:id="11a4e01b-517e-4aa9-bf67-b1d8d7e3662e" message="Logger initiated for fetching user profile image by employee ID"/>
+		<flow-ref doc:name="get_profileImage_Emp_ID_flow" doc:id="03aeb733-8ddb-4669-9c62-8053d10bf830" name="get_profileImage_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserProfileImage_ByEmployeeID_Completed" doc:id="33547a30-7ca5-4533-bc8e-828092a03ee2" message="Logger completed for fetching user profile image by employee ID"/>
+    </flow>
+    <flow name="get:\user-profile\workInformation\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserWorkInfo_ByEmployeeID_Started" doc:id="afe55d29-985f-4bf6-9d2e-40c5d6521bfb" message="Logger initiated for retrieving user work information by employee ID" />
+		<flow-ref doc:name="get_workInformation_Emp_ID_flow" doc:id="d191a2e1-7215-4397-8a25-fbbb5c99356c" name="get_workInformation_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserWorkInfo_ByEmployeeID_Completed" doc:id="433203e5-c2aa-4647-9ab0-0b3d700a9b11" message="Logger completed for retrieving user work information by employee ID" />
+    </flow>
+    <flow name="get:\user-profile\personalDetails\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetPersonalDetailsByEmployeeID_Started" doc:id="314e6b01-7fe2-4127-809d-990bd7b453fd" message="Logger initiated for retrieving user personal details by employee ID"/>
+		<flow-ref doc:name="get_personalDetails_Emp_ID_flow" doc:id="9f526a66-130b-434c-8062-75afb616d78c" name="get_personalDetails_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetPersonalDetailsByEmployeeID_Completed" doc:id="557a86f2-f6df-4d9c-b08d-7f8cef3a3758" message="Logger completed for retrieving user personal details by employee ID"/>
+    </flow>
+    <flow name="get:\Leave\leaveReport\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserLeaveReport_Started" doc:id="c3a74177-95f8-4e49-91c6-50fc43ba301c" message="Logger initiated for fetching user leave report by employee ID"/>
+		<flow-ref doc:name="get_leaveReport_flow" doc:id="bc2e1e80-4fd2-4845-ac64-0dc75b21a156" name="get_leaveReport_flow"/>
+		<logger level="INFO" doc:name="Logger_GetUserLeaveReport_Completed" doc:id="93359bc2-1ab1-4650-a50e-cfbabea402b6" message="Logger completed for fetching user leave report by employee ID"/>
+    </flow>
+    <flow name="get:\user-profile\hierarchyInformation\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserHierarchyInfo_Started" doc:id="9fd3bce9-caf1-4114-a6d1-ff045cc1b0d7" message="Logger initiated for retrieving user hierarchy information by employee ID"/>
+		<flow-ref doc:name="get_hierarchyInformation_Emp_ID_flow" doc:id="a9885844-deae-4225-9984-ee95c8685259" name="get_hierarchyInformation_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserHierarchyInfo_Completed" doc:id="686a9fe7-2c13-4498-b3dc-7078457dee6e" message="Logger completed for retrieving user hierarchy information by employee ID"/>
+    </flow>
+    <flow name="get:\user-profile\payrollInformation\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserPayrollInfo_Started" doc:id="3179293a-95d5-4ee2-8c9e-3430c2be8ac2" message="Logger initiated for getting user payroll information by employee ID"/>
+		<flow-ref doc:name="get_payrollInformation_Emp_ID_flow" doc:id="2ab19b10-01dd-4948-abe8-2d96babb3fff" name="get_payrollInformation_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserPayrollInfo_Completed" doc:id="e32a1ed7-0c71-4f97-a0e6-53fb78540aaf" message="Logger completed for getting user payroll information by employee ID"/>
+    </flow>
+    <flow name="get:\user-profile\professionalReferences\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserProfessionalReferences_started" doc:id="fc595bf5-2736-4709-86e8-cf9baea419d1" message="Logger initiated for retrieving user professional references by employee ID"/>
+		<flow-ref doc:name="get_professionalReferences_Emp_ID_flow" doc:id="fed2b639-5690-4d76-913c-aad5d6b8f487" name="get_professionalReferences_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserProfessionalReferences_completed" doc:id="8c93b780-27e1-4664-b695-c213d92fe61f" message="Logger completed for retrieving user professional references by employee ID"/>
+    </flow>
+    <flow name="get:\user-profile\emergencyDetails\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserEmergencyDetails_Started" doc:id="d3575212-e78e-407c-8671-73e8ae8d7793" message="Logger initiated for retrieving user emergency details by employee ID"/>
+		<flow-ref doc:name="get_emergencyDetails_Emp_ID_flow" doc:id="a5e3da18-0d19-4a5e-9dcd-8b95447eba57" name="get_emergencyDetails_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserEmergencyDetails_Finished" doc:id="6750ec0a-ebd0-4436-b03a-250042deea6c" message="Logger completed for retrieving user emergency details by employee ID"/>
+    </flow>
+    <flow name="get:\user-profile\identityInformation\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserPayrollInfo_started" doc:id="4ae40a33-31f5-4f8e-840e-5891965618dc" message="Logger initiated for retrieving user payroll information by employee ID"/>
+		<flow-ref doc:name="get_identityInformation_Emp_ID_flow" doc:id="9fd59394-91fe-4a47-8c76-a79b45d47c97" name="get_identityInformation_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserPayrollInfo_completed" doc:id="ca433c08-a8e9-4698-a0e1-5d0123ad3737" message="Logger completed for retrieving user payroll information by employee ID"/>
+    </flow>
+    <flow name="get:\user-profile\supportingDocuments\(EmployeeID):hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_GetUserSupportingDocument_Started" doc:id="63754592-6f74-4dac-b285-efe89412dc3b" message="Logger initiated for retrieving user supporting document by employee ID"/>
+		<flow-ref doc:name="get_supportingDocuments_Emp_ID_flow" doc:id="1a27836e-cc9b-498c-b627-d667be6fa290" name="get_supportingDocuments_Emp_ID_flow" />
+		<logger level="INFO" doc:name="Logger_GetUserSupportingDocument_Completed" doc:id="faf2e54a-25bc-4add-87a1-a1baeb483de3" message="Logger completed for retrieving user supporting document by employee ID"/>
+    </flow>
+    <flow name="post:\signup\OTP:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_signup_otp_creation_started" doc:id="90f70a56-6cf9-41b2-83c6-b6d4c6eb324a" message="Logging initiated for the creation of OTP during user signup process."/>
+		<flow-ref doc:name="hr_post_signup_OTP_flow" doc:id="8025d2d4-dc6d-4b1e-8607-cefcb8620fc3" name="hr_post_signup_OTP_flow"/>
+		<logger level="INFO" doc:name="Logger_signup_otp_creation_completed" doc:id="2ab3ff2e-a253-4f69-b3d0-f3f7aed09085" message="Logging completed for the successful creation of OTP during user signup process."/>
+    </flow>
+    <flow name="post:\signin\forgotPassword\OTP:application\json:hrms-eapi-config">
+        <logger level="INFO" doc:name="Logger__forgot_password_otp_creation_started" doc:id="9fe04b0e-cc52-4b81-9f00-cc393df776be" message="Logging initiated for the creation of OTP during the request for forgot password"/>
+		<flow-ref doc:name="Flow Reference" doc:id="09c704ce-e919-4834-ab9d-96465c0b8226" name="hr_post_signin_forgotPasswordOTP_flow"/>
+		<logger level="INFO" doc:name="Logger_forgot_password_otp_creation_completed" doc:id="90b7cebe-f719-43c1-ae11-45022ff48dd1" message="Logging completed for the successful creation of OTP during the request for forgot password."/>
+    </flow>
+    <flow name="post:\Leave\applyLeave:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_apply_leave_started" doc:id="7bbe581a-6590-44a3-990e-7b094ab13671" message="Logging initiated for the apply of leave"/>
+		<flow-ref doc:name="applyLeave_post_flow" doc:id="5e67c004-c25f-437f-bd39-4be97b0d032c" name="post_applyLeave_flow"/>
+		<logger level="INFO" doc:name="Logger_apply_leave_completed" doc:id="fbe98f55-8198-4739-b71a-ed6075c58a57" message="Logging completed for the successful apply of leave"/>
+    </flow>
+    <flow name="post:\user-profile\emergencyDetails:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_create_emergency_details_started" doc:id="3fbe3293-1b0d-4bd1-8d57-5af29fc90429" message="Logging initiated for creating emergency details for a user."/>
+		<flow-ref doc:name="post_emergencyDetails_flow" doc:id="e53a2010-4b64-452b-bc04-fd46af5ca562" name="post_emergencyDetails_flow" />
+		<logger level="INFO" doc:name="Logger_create_emergency_details_completed" doc:id="f15eee24-d9f0-42b5-a43b-6b8a7ecc1b4e" message="Logging completed for successfully creating emergency details for a user."/>
+    </flow>
+    <flow name="post:\attendance\entry:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_attendance_entry_started" doc:id="2f92406e-6562-45b6-b3a7-3c11f97ba21d" message="Logging initiated for the entry of attendance"/>
+		<flow-ref doc:name="attendance_post_entry_flow" doc:id="7ef77ec9-556b-47d6-bdb2-9cbfc3e8335e" name="attendance_post_entry_flow"/>
+		<logger level="INFO" doc:name="Logger_attendance_entry_completed" doc:id="d844539e-6b33-41ce-a7cd-e845fbb89d58" message="Logging completed for the entry of attendance."/>
+    </flow>
+    <flow name="post:\user-profile\hierarchyInformation:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_user_hierarchy_creation_started" doc:id="8549e9a8-7eb2-4bd6-a002-33b51834f647" message="Logging initiated for the creation of user hierarchy information."/>
+		<flow-ref doc:name="post_hierarchyInformation_flow" doc:id="bda5f616-e031-42ae-830b-82eb05979d20" name="post_hierarchyInformation_flow" />
+		<logger level="INFO" doc:name="Logger_user_hierarchy_creation_completed" doc:id="c775abda-ef23-4ace-9aeb-2184d0062f90" message="Logging completed for the successful creation of user hierarchy information."/>
+    </flow>
+    <flow name="post:\Leave\holidays:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_holiday_logger_started" doc:id="b537aa3c-e6ed-46ce-b848-2ce6eaf62011" message="Logging initiated for applying holidays."/>
+		<flow-ref doc:name="post_holidays_flow" doc:id="f37c9a27-691f-467a-9f33-26f58f75fbfe" name="post_holidays_flow"/>
+		<logger level="INFO" doc:name="Logger_holiday_logger_completed" doc:id="744a820d-de01-45b2-b8a7-f5c3afe5bd91" message="Logging completed for applying holidays."/>
+    </flow>
+    <flow name="post:\user-profile\identityInformation:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_create_user_identity_info_started" doc:id="4df8b787-a201-4f4c-84d9-d474860cd459" message="Logging initiated for creating user identity information."/>
+		<flow-ref doc:name="post_identityInformation_flow" doc:id="83448c22-06da-494f-8f3a-263be446f9ca" name="post_identityInformation_flow" />
+		<logger level="INFO" doc:name="Logger_create_user_identity_info_completed" doc:id="0081c1c4-7d38-42cd-991b-49ba8bbbd366" message="Logging completed for the successful creation of user identity information."/>
+    </flow>
+    <flow name="post:\user-profile\payrollInformation:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_create_user_payroll_info_started" doc:id="6c24d169-13ea-4d7d-924d-f9c59837c9ee" message="Logging initiated for creating user payroll information."/>
+		<flow-ref doc:name="post_payrollInformation_flow" doc:id="324b34d2-d1a4-4add-9eaf-ebbcfbfd9318" name="post_payrollInformation_flow" />
+		<logger level="INFO" doc:name="Logger_create_user_payroll_info_completed" doc:id="47ea8d88-7d8f-45c6-a5f0-7e88798bd3d3" message="Logging completed for successfully creating user payroll information."/>
+    </flow>
+    <flow name="post:\user-profile\personalDetails:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_create_user_personal_details_started" doc:id="c7c7d4bb-af6e-4d79-b7e5-341c21771102" message="Logging initiated for the creation of user personal details"/>
+		<flow-ref doc:name="post_personalDetails_flow" doc:id="c15ddf84-0020-4fb1-9e20-512852f566ee" name="post_personalDetails_flow" />
+		<logger level="INFO" doc:name="Logger_create_user_personal_details_completed" doc:id="98fc3eab-4b7e-47cd-a20c-6d46f9672df5" message="Logging completed for the successful creation of user personal details"/>
+    </flow>
+    <flow name="post:\user-profile\professionalReferences:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_create_user_professional_references_started" doc:id="b6678e92-be03-428b-b322-e68277c299ee" message="Logging initiated for the creation of professional references for a user."/>
+		<flow-ref doc:name="post_professionalReferences_flow" doc:id="e96114e0-13c1-4380-80ea-5a8c4ffed454" name="post_professionalReferences_flow" />
+		<logger level="INFO" doc:name="Logger_create_user_professional_references_completed" doc:id="d33e9fc4-ad74-4d08-b1c4-6bfb48366474" message="Logging completed for the successful creation of professional references for a user."/>
+    </flow>
+    <flow name="post:\user-profile\profileImage:multipart\form-data:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_profile_image_creation_started" doc:id="6ee9cc57-ff15-4774-a125-adcc974f7fb4" message="Logging initiated for the creation or upload of user profile image"/>
+		<flow-ref doc:name="post_profileImage_flow" doc:id="defe876a-d3c7-4c7d-a08a-7781670292e0" name="post_profileImage_flow" />
+		<logger level="INFO" doc:name="Logger_profile_image_creation_completed" doc:id="f0f89721-ceed-4c91-9339-c6ab28109846" message="Logging completed for the successful creation or upload of user profile image"/>
+    </flow>
+    <flow name="post:\signin:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_user_signin_started" doc:id="0d5829b7-73df-4c63-9add-99d72c7cc6b2" message="Logging initiated for a new user sign-in process"/>
+		<flow-ref doc:name="hr_post_signin_Flow" doc:id="9bf332f2-bb3e-4727-af56-8a020a22e066" name="hr_post_signin_Flow" />
+		<logger level="INFO" doc:name="Logger_user_signin_completed" doc:id="4ca47b1c-1133-4c41-934b-0b4b5f2f2b66" message="Logging completed for the successful sign-in of a new user."/>
+    </flow>
+    <flow name="post:\signup:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_signup_process_started" doc:id="2828976d-7a78-4398-bc90-efa6fdb65af6" message="Logging initiated for the start of a new user signup process"/>
+		<flow-ref doc:name="hr_post_signup_flow" doc:id="940c468a-06ac-44e7-a6a7-75468699250e" name="hr_post_signup_flow"/>
+		<logger level="INFO" doc:name="Logger_signup_process_completed" doc:id="cfd0ce88-4b7a-4cdb-9410-b02c146e3267" message="Logging completed for the successful completion of a new user signup process"/>
+    </flow>
+    <flow name="post:\user-profile\supportingDocuments:multipart\form-data:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_create_user_documents_started" doc:id="41ebb2cd-847e-4ce5-b852-041bf04ccf05" message="Logging initiated for the creation of user supporting documents."/>
+		<flow-ref doc:name="post_supportingDocuments_flow" doc:id="13eeede9-f5b5-40eb-bf0e-6dafdd0e6928" name="post_supportingDocuments_flow" />
+		<logger level="INFO" doc:name="Logger_create_user_documents_completed" doc:id="a5e27008-28ef-472a-8a6c-35bdccd8d471" message="Logging completed for the successful creation of user supporting documents."/>
+    </flow>
+    <flow name="post:\user-profile\workInformation:application\json:hrms-eapi-config">
+		<logger level="INFO" doc:name="Logger_create_user_work_info_started" doc:id="4d495de7-a1c9-4c93-a9be-bac3734c3f67" message="Logging initiated for creating user work information"/>
+		<flow-ref doc:name="post_workInformation_flow" doc:id="a01504b2-8eb9-4a40-aa20-2ac8e7db1bf6" name="post_workInformation_flow" />
+		<logger level="INFO" doc:name="Logger_create_user_work_info_completed" doc:id="2205bfdd-57b0-4051-8f46-577cd4e8948a" message="Logging completed for creating user work information"/>
+    </flow>
+	<flow name="post:\resendOTP:application\json:hrms-eapi-config" doc:id="d429f43d-ed20-433c-a84a-d2d4468563c0" >
+		<logger level="INFO" doc:name="Logger_Post_ResendOTP_Started" doc:id="b2db3102-3071-4539-b250-75899d5b6386" message="Logger initiated for creating resend OTP by Email Id" />
+		<flow-ref doc:name="hr_get_resendOTP_Flow" doc:id="5b0e234c-ba96-424c-a9dd-3892962635ec" name="hr_post_resendOTP_Flow" />
+		<logger level="INFO" doc:name="Logger_Post_ResendOTP_Completed" doc:id="2b6e9bab-9cb4-41a0-bd07-eb50a8d55bd4" message="Logger completed for creating resend OTP by Email Id" />
+	</flow>
+</mule>
