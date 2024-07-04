@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        ANYPOINT_USERNAME = credentials('anypoint-username') // Update with the correct ID
+        ANYPOINT_PASSWORD = credentials('anypoint-password') // Update with the correct ID
+    }
+
     stages {
         stage('Build Application') {
             steps {
@@ -21,11 +26,12 @@ pipeline {
                 echo 'Deploying mule project due to the latest code commit…'
                 echo 'Deploying to the configured environment….'
                 script {
-                    
-                    if (isUnix()) {
-                        sh "mvn clean deploy -DmuleDeploy"
-                    } else {
-                        bat "mvn clean deploy -DmuleDeploy"
+                    withCredentials([usernamePassword(credentialsId: 'anypoint.hrms', usernameVariable: 'ANYPOINT_USERNAME', passwordVariable: 'ANYPOINT_PASSWORD')]) {
+                        if (isUnix()) {
+                            sh "mvn clean deploy -DmuleDeploy"
+                        } else {
+                            bat "mvn clean deploy -DmuleDeploy"
+                        }
                     }
                 }
             }
