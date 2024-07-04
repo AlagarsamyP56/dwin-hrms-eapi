@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd ">
+   <flow name="humanResources-sapi-main">
+        <http:listener path="/api/*" config-ref="HumanResources-sapi-httpListenerConfig">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="humanResources-sapi-config" />
+        <error-handler ref="errorHandlingError_Handler">
+            
+        </error-handler>
+    </flow>
+    <flow name="patch:\signin\forgetPossword:application\json:humanResources-sapi-config">
+        <logger level="INFO" doc:name="Initial logger" doc:id="1b88c1d4-91bf-4df5-bd78-2aad23e9eea7" message="Forget Possword flow start " />
+		<flow-ref doc:name="Update database" doc:id="bfca203e-3b16-4f7e-a030-ed2a80cf9682" name="update_database_subFlow"/>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  message: "Password changed successfully"&#10;}]' doc:name="Set Payload" doc:id="bc91f449-a7a6-4163-a007-69788ef9d81c" />
+		<logger level="INFO" doc:name="Final Logger" doc:id="18fc55b2-18a0-4c09-b7b7-162f37ca03f8" message="Forget Possword End Successfully" />
+    </flow>
+    <flow name="get:\signup:humanResources-sapi-config">
+        <logger level="INFO" doc:name="Initial logger" doc:id="63d48bbd-adda-49e2-b427-f3cb9ffe59c3" message="Get signup data flow start " />
+		<flow-ref doc:name="Select database" doc:id="3080b7fa-cb42-4a54-b4a8-b001fcc41656" name="database_subFlow"/>
+		<logger level="INFO" doc:name="Final Logger" doc:id="eccf33f8-d351-4540-8b81-ffa28b255d9f" message="Get signup data End Successfully " />
+    </flow>
+    <flow name="post:\signup:application\json:humanResources-sapi-config">
+		<logger level="INFO" doc:name="Initial logger" doc:id="0598e5e3-c991-49a0-a92f-1d10f85218d7" message="User Register flow start " />
+		<flow-ref doc:name="Insert database" doc:id="8639e2ad-5a82-4a9b-ab26-e79254eb4062" name="insert_database_subFlow"/>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;  message:  "User registered successfully"&#10;}]' doc:name="Set Payload" doc:id="13bc87f5-ed69-4a90-b417-e468c938d17b" />
+		<logger level="INFO" doc:name="Final Logger" doc:id="57606c41-685a-42a0-82b9-6d0dd58631ef" message="User Register End Successfully " />
+    </flow>
+</mule>

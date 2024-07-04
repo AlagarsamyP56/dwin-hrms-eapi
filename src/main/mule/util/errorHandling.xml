@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<error-handler name="errorHandlingError_Handler" doc:id="80346560-533b-470a-a3fb-202fda226d09" >
+		 <on-error-propagate type="APIKIT:BAD_REQUEST">
+			<set-variable value="400" doc:name="Set Variable" doc:id="780a0913-b8a0-4760-b9a8-36befb65e3e8" variableName="httpStatus"/>
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{message: "Bad request"}]' doc:name="Set Payload" doc:id="a1dadbb3-fcc5-4469-8abc-acc17e7a6073" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+			<set-variable value="404" doc:name="Set Variable" doc:id="b2da9084-a66a-456e-9e24-5f360f2ae4c2" variableName="httpStatus"/>
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{message: "Resource not found"}]' doc:name="Set Payload" doc:id="f94f7602-d07a-42ff-b638-3a96204ca9f6" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+			<set-variable value="405" doc:name="Set Variable" doc:id="19ed09dd-cf09-4457-a31e-d45af932cdd6" variableName="httpStatus"/>
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{message: "Method not allowed"}]' doc:name="Set Payload" doc:id="5d4f31c6-c516-4e6d-8e5e-b31f790ed109" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_ACCEPTABLE">
+			<set-variable value="406" doc:name="Set Variable" doc:id="1c4a4360-5e68-4331-9bb1-c1b253b451bd" variableName="httpStatus"/>
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{message: "Not acceptable"}]' doc:name="Set Payload" doc:id="9afd2102-750b-4587-9d6c-05af73f7afdd" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+			<set-variable value="415" doc:name="Set Variable" doc:id="6a2fd506-1ce5-42cb-83ef-e12ef971e12d" variableName="httpStatus" />
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{message: "Unsupported media type"}]' doc:name="Set Payload" doc:id="8919a2b7-df00-49e2-ba9b-261ffa1e6e7c" />
+            
+</on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+			<set-variable value="501" doc:name="Set Variable" doc:id="ffd246b9-af82-40e8-9184-d0f258f4a5f9" variableName="httpStatus" />
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{message: "Not Implemented"}]' doc:name="Set Payload" doc:id="32c7a54f-f832-482a-909f-f5b3463b0929" />
+            
+</on-error-propagate>
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="572c39e0-fe23-477f-b03c-f629bd25e039" type="DATABASE:ERROR">
+			<set-variable value="500" doc:name="Set Variable" doc:id="537bf537-0ed3-4fed-b5ed-d7cdc9ee4cfe" variableName="httpStatus" />
+			<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;[{&#10;	"status": "Failure",&#10;	"errorMessages":  error.description&#10;  &#10;}]]' doc:name="Set Payload" doc:id="7a9f7573-b2f4-4c95-a37c-6644e2215699" />
+		</on-error-propagate>
+            
+</error-handler>
+</mule>

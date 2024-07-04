@@ -1,0 +1,14 @@
+http:
+ host: "0.0.0.0"
+ port: "8085"
+ api: "/api/*"
+
+db:
+ url: "jdbc:postgresql://155.133.26.236:5432/Human_Resource_Management"
+ name: "org.postgresql.Driver"
+ user: "![pUrViiF4V8z9eREyb3ZbUFPIceElhQT2]"
+ password: "![tgWYprPNT3llNGnx+Ccfsg==]" 
+ 
+ 
+# dwin@123
+ 

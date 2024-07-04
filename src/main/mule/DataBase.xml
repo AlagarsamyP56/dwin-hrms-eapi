@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="insert_database_subFlow" doc:id="f6bd746c-0b41-41fc-8314-b2467183611e" >
+		<logger level="INFO" doc:name="Before DB Call Logger" doc:id="4dcb87fc-b52b-4cd6-a3fd-f4a5b6094e75" message='Before DB Call   #[now() as String {format:"yyyy.MM.dd HH:mm:ss.SSS" }]' />
+		<db:insert doc:name="Insert database" doc:id="3e430641-816c-40bb-93c8-f2b903bc9ec1" config-ref="Database_Config">
+			<error-mapping targetType="DATABASE:ERROR" />
+			<db:sql><![CDATA[INSERT INTO public."Signup" ("EmployeeID", "Name", "Email", "PhoneNumber", "Password") VALUES(:EmployeeID, :Name, :Email, :PhoneNumber,:Password);]]></db:sql>
+			<db:input-parameters><![CDATA[#[{
+    "EmployeeID": payload.EmployeeID,
+    "Name": payload.Name,
+    "Email": payload.Email,
+    "PhoneNumber": payload.PhoneNumber,
+    "Password": payload.Password
+}]]]></db:input-parameters>
+		</db:insert>
+		<logger level="INFO" doc:name="After DB Call Logger" doc:id="58b00074-2d68-422d-89c9-34dafd584a5f" message='After DB Call   #[now() as String {format:"yyyy.MM.dd HH:mm:ss.SSS" }]' />
+	</sub-flow>
+	<sub-flow name="update_database_subFlow" doc:id="3454ab68-fb08-45d8-96b3-14c6bc7b285f" >
+		<logger level="INFO" doc:name="Before DB Call Logger" doc:id="75c214be-f312-4720-ac0d-1d0cbd7d5baf" message='Before DB Call   #[now() as String {format:"yyyy.MM.dd HH:mm:ss.SSS" }]' />
+		<db:update doc:name="Update database" doc:id="f1df6e06-6aca-41b7-b8a3-f61df61f6648" config-ref="Database_Config">
+			<db:sql ><![CDATA[UPDATE public."Signup" SET "Password"=:Password WHERE "PhoneNumber"= :PhoneNumber or "Email"= :Email;
+]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+  
+    "Email": payload.Email,
+    "PhoneNumber": payload.PhoneNumber,
+    "Password": payload.Password
+}]]]></db:input-parameters>
+		</db:update>
+		<logger level="INFO" doc:name="After DB Call Logger" doc:id="3d57ad86-47de-414b-9f3a-4d82a929cd72" message='After DB Call   #[now() as String {format:"yyyy.MM.dd HH:mm:ss.SSS" }]' />
+	</sub-flow>
+	<sub-flow name="database_subFlow" doc:id="8fdce468-250f-4fe2-8d4e-f286ca0ee076" >
+		<logger level="INFO" doc:name="Before DB Call Logger" doc:id="c5967c36-3642-4f50-a5f8-d08db84ae990" message='Before DB Call   #[now() as String {format:"yyyy.MM.dd HH:mm:ss.SSS" }]' />
+		<db:select doc:name="Select database" doc:id="60e096de-a56f-47c5-8993-9a606b47ecdb" config-ref="Database_Config" >
+			<db:sql ><![CDATA[SELECT * FROM "Signup";]]></db:sql>
+		</db:select>
+		<set-payload value="#[%dw 2.0&#10;output application/json&#10;---&#10;payload]" doc:name="Set Payload" doc:id="1d14a680-d80c-4a14-9dd6-49915bd9f938" />
+		<logger level="INFO" doc:name="After DB Call Logger" doc:id="c73bf064-7804-45fa-a150-d2e4a15bd8b0" message='After DB Call   #[now() as String {format:"yyyy.MM.dd HH:mm:ss.SSS" }]' />
+	</sub-flow>
+</mule>
