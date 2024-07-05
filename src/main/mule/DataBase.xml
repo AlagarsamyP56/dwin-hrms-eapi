@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
 	xmlns="http://www.mulesoft.org/schema/mule/core"
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
-">
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<sub-flow name="insert_database_subFlow" doc:id="f6bd746c-0b41-41fc-8314-b2467183611e" >
 		<logger level="INFO" doc:name="Before DB Call Logger" doc:id="4dcb87fc-b52b-4cd6-a3fd-f4a5b6094e75" message='Before DB Call   #[now() as String {format:"yyyy.MM.dd HH:mm:ss.SSS" }]' />
 		<db:insert doc:name="Insert database" doc:id="3e430641-816c-40bb-93c8-f2b903bc9ec1" config-ref="Database_Config">
