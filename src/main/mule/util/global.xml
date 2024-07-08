@@ -23,13 +23,13 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config> 
 	 --><db:config name="Database_Config" doc:name="Database Config" doc:id="2a8c72d8-700c-4ded-8b64-a0323215da03" >
-		<db:generic-connection url="${db.url}" driverClassName="${db.name}" user="${secure::db.user}" password="${secure::db.password}"/>
+		<db:generic-connection url="${db.url}" driverClassName="${db.name}" user="${db.user}" password="${db.password}"/>
 	</db:config>
 	<configuration-properties doc:name="Configuration properties" doc:id="91d9e959-c647-4cb5-99db-99211bbab309" file="queries.properties" />
 	<configuration-properties doc:name="Configuration properties" doc:id="b9469e8e-6edc-4844-947e-eba7e2278a7c" file="config\dev.yaml" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="b6eb5e6b-8ba4-4e4c-8217-47239f9ff120" key="dwin@123" file="config\dev.yaml">
+<!-- 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="b6eb5e6b-8ba4-4e4c-8217-47239f9ff120" key="dwin@123" file="config\dev.yaml">
 		<secure-properties:encrypt algorithm="Blowfish" />
-	</secure-properties:config>
+	</secure-properties:config> -->
 	
 
  
