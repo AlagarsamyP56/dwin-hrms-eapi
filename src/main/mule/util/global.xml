@@ -13,23 +13,17 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd 
 http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd">
+>
 	    <http:listener-config name="HumanResources-sapi-httpListenerConfig">
         <http:listener-connection host="${http.host}" port="${http.port}" />
     </http:listener-config>
      <apikit:config name="humanResources-sapi-config" api="humanResources-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-    <!--  <configuration-properties doc:name="Configuration properties" doc:id="afdab2a4-9ad8-4878-9e6d-57c11389fd76" file="config/${env}.yaml" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="85102238-b342-4d4a-894b-ce6994feb36d" file="config/${env}.yaml" key="${key}">
-		<secure-properties:encrypt algorithm="Blowfish" />
-	</secure-properties:config> 
-	 --><db:config name="Database_Config" doc:name="Database Config" doc:id="2a8c72d8-700c-4ded-8b64-a0323215da03" >
+   <db:config name="Database_Config" doc:name="Database Config" doc:id="2a8c72d8-700c-4ded-8b64-a0323215da03" >
 		<db:generic-connection url="${db.url}" driverClassName="${db.name}" user="${db.user}" password="${db.password}"/>
 	</db:config>
 	<configuration-properties doc:name="Configuration properties" doc:id="91d9e959-c647-4cb5-99db-99211bbab309" file="queries.properties" />
 	<configuration-properties doc:name="Configuration properties" doc:id="b9469e8e-6edc-4844-947e-eba7e2278a7c" file="config\dev.yaml" />
-<!-- 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="b6eb5e6b-8ba4-4e4c-8217-47239f9ff120" key="dwin@123" file="config\dev.yaml">
-		<secure-properties:encrypt algorithm="Blowfish" />
-	</secure-properties:config> -->
+
 	
 
  
