@@ -2,7 +2,7 @@
 
 <mule xmlns:db="http://www.mulesoft.org/schema/mule/db"
 	xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
-	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	
 	xmlns:email="http://www.mulesoft.org/schema/mule/email"
 	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
 	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
