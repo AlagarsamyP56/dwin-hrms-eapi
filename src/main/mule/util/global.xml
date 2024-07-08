@@ -17,8 +17,8 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	    <http:listener-config name="HumanResources-sapi-httpListenerConfig">
         <http:listener-connection host="${http.host}" port="${http.port}" />
     </http:listener-config>
-      <apikit:config name="humanResources-sapi-config" api="resource::41cf5e1e-95f6-4a4d-b3ce-adb9b59bc934:humanresources-sapi:1.0.3:raml:zip:humanResources-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-  <!--  <configuration-properties doc:name="Configuration properties" doc:id="afdab2a4-9ad8-4878-9e6d-57c11389fd76" file="config/${env}.yaml" />
+     <apikit:config name="humanResources-sapi-config" api="humanResources-sapi.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <!--  <configuration-properties doc:name="Configuration properties" doc:id="afdab2a4-9ad8-4878-9e6d-57c11389fd76" file="config/${env}.yaml" />
 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="85102238-b342-4d4a-894b-ce6994feb36d" file="config/${env}.yaml" key="${key}">
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config> 

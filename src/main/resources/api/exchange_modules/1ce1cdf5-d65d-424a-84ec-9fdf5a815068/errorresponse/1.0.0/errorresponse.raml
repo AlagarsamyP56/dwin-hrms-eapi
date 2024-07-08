@@ -1,0 +1,112 @@
+#%RAML 1.0 Trait
+usage: Apply this Trait to any API to provoide basic http error response
+responses:
+  400:
+    description: Bad Request
+    body:
+      application/json:
+        displayName: Bad Request
+        example:
+          {
+            "message" : "Bad Request"
+          }
+  401:
+    description: Unauthorized
+    body:
+      application/json:
+        displayName: Unauthorized
+        example:
+          {
+            "message" : "Unauthorized"
+          }
+  403:
+    description: Forbidden
+    body:
+      application/json:
+        displayName: Forbidden
+        example:
+          {
+            "message" : "Forbidden"
+          }
+  404:
+    description: Not Found
+    body:
+      application/json:
+        displayName: Not Found
+        example:
+          {
+            "message": "Resource Not Found"
+          }
+  405:
+    description: Method Not Allowed
+    body:
+      application/json:
+        displayName: Method Not Allowed
+        example:
+          {
+            "message": "Method not allowed/defined"            
+          }
+  406:
+    description: Not Acceptable
+    body:
+      application/json:
+        displayName: Not Acceptable
+        example:
+          {
+            "message": "Not Acceptable"
+          }
+  408:
+    description: Request Timeout
+    body:
+      application/json:
+        displayName: Request Timeout
+        example:
+          {
+             "message": "Timeout Exceeded"
+          }
+  415:
+    description: Unsupported Media Type
+    body:
+      application/json:
+        displayName: Unsupported Media Type
+        example:
+          {
+            "message": "Unsupported Media Type"
+          }
+  500:
+    description: Internal Server Error
+    body:
+      application/json:
+        displayName: Internal Server Error
+        example:
+          {
+            "message": "An error has occurred"
+          }
+  501:
+    description: Not Implemented
+    body:
+      application/json:
+        displayName: Not Implemented
+        example:
+          {
+            "message": "Not Implemented"
+          }
+  503:
+    description: Service Unavailable
+    body:
+      application/json:
+        displayName: Service Unavailable
+        example:
+          {
+            "message": "Service Unavailable"
+          }
+  504:
+    description: Gateway Timeout
+    body:
+      application/json:
+        displayName: Gateway Timeout
+        example:
+          {
+            "message": "Gateway Timeout"
+          }
+    

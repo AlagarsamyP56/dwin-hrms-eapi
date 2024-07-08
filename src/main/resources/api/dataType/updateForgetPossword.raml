@@ -1,0 +1,13 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  Email:
+    type: string
+    required: false
+    pattern: "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+  PhoneNumber:
+    type: string
+    required: false
+  Password:
+    type: string

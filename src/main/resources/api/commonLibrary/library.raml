@@ -1,0 +1,14 @@
+#%RAML 1.0 Library
+traits:
+  "errorResponse": !include exchange_modules/1ce1cdf5-d65d-424a-84ec-9fdf5a815068/errorresponse/1.0.0/errorresponse.raml
+  
+
+  "security": !include exchange_modules/1ce1cdf5-d65d-424a-84ec-9fdf5a815068/security-client_id-enforcement/1.0.0/security-client_id-enforcement.raml
+
+
+types:
+
+  updateForgetPossword: !include ../dataType/updateForgetPossword.raml
+  postSingup: !include ../dataType/postSingup.raml
+  
+

@@ -1,0 +1,60 @@
+#%RAML 1.0
+title: humanResources-sapi
+description: 
+  This API provides endpoints for managing user registration within an organization's human resources system.
+version: 1.0
+mediaType:  
+- application/json
+protocols: [HTTP , HTTPS]
+
+uses:
+
+  "commonlib" : commonLibrary/library.raml
+
+
+
+/signin:
+  is:
+    - commonlib.errorResponse
+  
+              
+  /forgetPossword:  
+    patch:
+      is:
+        - commonlib.errorResponse
+      body:
+        application/json:
+          type: commonlib.updateForgetPossword
+          example: !include example/requestExample/updateForgetPossword.raml
+      responses:
+        200:
+          body:
+           application/json:
+             example: !include example/responseExample/updateForgetPossword.raml 
+              
+       
+
+/signup:
+  get: 
+   is:
+     - commonlib.errorResponse
+   
+   responses:
+    200:
+     body:
+        application/json:
+          example:  !include example/responseExample/getSignup.raml
+  
+  
+  post:
+    is:
+      - commonlib.errorResponse
+    body:
+      application/json:
+        type: commonlib.postSingup
+        example: !include example/requestExample/postSignup.raml
+    responses:
+        200:
+          body:
+           application/json:
+             example: !include example/responseExample/postSignup.raml

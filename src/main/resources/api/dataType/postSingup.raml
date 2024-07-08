@@ -1,0 +1,19 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  EmployeeID:
+    type: string
+    description: ID of the employee
+    required: true
+  Name:
+    type: string
+    required: true
+  Email:
+    type: string
+    pattern: "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+  PhoneNumber:
+    type: string
+  Password:
+    type: string
+  
