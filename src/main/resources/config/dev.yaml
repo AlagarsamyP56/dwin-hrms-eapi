@@ -6,8 +6,8 @@ http:
 db:
  url: "jdbc:postgresql://155.133.26.236:5432/Human_Resource_Management"
  name: "org.postgresql.Driver"
- user: "![pUrViiF4V8z9eREyb3ZbUFPIceElhQT2]"
- password: "![tgWYprPNT3llNGnx+Ccfsg==]" 
+ user: "dwinsoft_trainee"
+ password: "Good@123K" 
  
  
 # dwin@123
