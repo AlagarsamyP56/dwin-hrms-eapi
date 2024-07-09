@@ -26,7 +26,7 @@ pipeline {
                     bat "docker rm ${containerName} || exit 0"
 
                     // Run the Docker container
-                    bat "docker run -d --name ${containerName} -p 80:8082 dockermule ${jarPath}"
+                    bat "docker run -d --name ${containerName} -p 8082:8085  dockermule ${jarPath}"
 
                     // Print a message indicating that the JAR file will be copied
                     echo "Copying JAR file to Docker container: ${jarPath}"
