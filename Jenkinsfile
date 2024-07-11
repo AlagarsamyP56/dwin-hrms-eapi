@@ -66,8 +66,7 @@ pipeline {
                         \$headers = @{
                             'Authorization' = 'Bearer ${env.PORTAINER_TOKEN}'
                         }
-                        \$response = Invoke-RestMethod -Uri '${env.PORTAINER_URL}/endpoints/1/docker/containers/${containerName}/start' -Method POST -Headers \$headers
-                        Write-Host \$response
+                        Invoke-RestMethod -Uri '${env.PORTAINER_URL}/endpoints/1/docker/containers/${containerName}/start' -Method POST -Headers \$headers
                         "
                     """
 
