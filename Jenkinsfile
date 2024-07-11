@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Get the JAR file path using PowerShell on Windows
-                    def jarPath = bat(script: 'powershell -Command "Get-ChildItem target\\*.jar | Select-Object -First 1 | ForEach-Object { $_.FullName }"', returnStdout: true).trim()
+                    def jarPath = powershell(script: 'Get-ChildItem target\\*.jar | Select-Object -First 1 | ForEach-Object { $_.FullName }', returnStdout: true).trim()
                     jarPath = jarPath.split("\n").last().trim() // Extract the actual path from the command output
 
                     echo "Verified JAR file path: ${jarPath}"
@@ -27,19 +27,16 @@ pipeline {
                     echo "Docker container name: ${containerName}"
 
                     // Stop and remove existing container using Portainer API
-                    bat """
-                        powershell -Command "
+                    powershell """
                         \$headers = @{
                             'Authorization' = 'Bearer ${env.PORTAINER_TOKEN}'
                             'Content-Type' = 'application/json'
                         }
                         Invoke-RestMethod -Uri '${env.PORTAINER_URL}/endpoints/1/docker/containers/${containerName}?v=1' -Method DELETE -Headers \$headers -ErrorAction SilentlyContinue
-                        "
                     """
 
                     // Run the Docker container using Portainer API
-                    bat """
-                        powershell -Command "
+                    powershell """
                         \$headers = @{
                             'Authorization' = 'Bearer ${env.PORTAINER_TOKEN}'
                             'Content-Type' = 'application/json'
@@ -57,17 +54,14 @@ pipeline {
                         } | ConvertTo-Json
                         \$response = Invoke-RestMethod -Uri '${env.PORTAINER_URL}/endpoints/1/docker/containers/create' -Method POST -Body \$body -Headers \$headers
                         Write-Host \$response.Id
-                        "
                     """
 
                     // Start the Docker container using Portainer API
-                    bat """
-                        powershell -Command "
+                    powershell """
                         \$headers = @{
                             'Authorization' = 'Bearer ${env.PORTAINER_TOKEN}'
                         }
                         Invoke-RestMethod -Uri '${env.PORTAINER_URL}/endpoints/1/docker/containers/${containerName}/start' -Method POST -Headers \$headers
-                        "
                     """
 
                     // Copy the JAR file to the Docker container using Docker CLI
@@ -77,3 +71,4 @@ pipeline {
         }
     }
 }
+
