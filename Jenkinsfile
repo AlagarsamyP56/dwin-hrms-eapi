@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        KUBERNETES_TOKEN = credentials('k8s-token') // Replace with your Jenkins credential ID
+    }
+
     stages {
         stage('Build Application') {
             steps {
@@ -38,10 +42,32 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                script {
-                    // Deploy to Kubernetes using the deployment.yml file
-                    bat 'kubectl apply -f deployment.yml'
-
+                withEnv(["KUBERNETES_TOKEN=${env.KUBERNETES_TOKEN}"]) {
+                    script {
+                        // Create a temporary kubeconfig file
+                        writeFile file: 'kubeconfig', text: """
+                        apiVersion: v1
+                        kind: Config
+                        clusters:
+                        - cluster:
+                            server: https://YOUR_KUBERNETES_API_SERVER
+                            insecure-skip-tls-verify: true
+                          name: cluster
+                        contexts:
+                        - context:
+                            cluster: cluster
+                            user: user
+                          name: context
+                        current-context: context
+                        users:
+                        - name: user
+                          user:
+                            token: ${env.KUBERNETES_TOKEN}
+                        """
+                        
+                        // Use the temporary kubeconfig file to deploy
+                        bat 'kubectl apply -f deployment.yml --kubeconfig=kubeconfig'
+                    }
                 }
             }
         }
