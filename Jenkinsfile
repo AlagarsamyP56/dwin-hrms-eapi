@@ -26,7 +26,7 @@ pipeline {
                     bat "docker rm ${containerName} || exit 0"
 
                     // Run the Docker container
-                    bat "docker run -d --name ${containerName} -p 8082:8081  dockermule ${jarPath}"
+                    bat "docker run -d --name ${containerName} -p 8082:8081 dockermule"
 
                     // Print a message indicating that the JAR file will be copied
                     echo "Copying JAR file to Docker container: ${jarPath}"
@@ -36,10 +36,17 @@ pipeline {
                 }
             }
         }
-        stage('Deploy to Kubernetes'){
-        steps{
-            sh 'kubectl apply -f deployment.yml'
-       }
-    }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Deploy to Kubernetes using the deployment.yml file
+                    bat 'kubectl apply -f deployment.yml'
+
+                    // Print the Kubernetes Dashboard URL for convenience
+                    def dashboardUrl = 'http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/service/default/kubernetes?namespace=default'
+                    echo "Access the Kubernetes Dashboard at: ${dashboardUrl}"
+                }
+            }
+        }
     }
 }
