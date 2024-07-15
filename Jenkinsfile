@@ -43,7 +43,7 @@ pipeline {
                     bat 'kubectl apply -f deployment.yml'
 
                     // Print the Kubernetes Dashboard URL for convenience
-                    def dashboardUrl = 'http://127.0.0.1:8001/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/#/service/default/kubernetes?namespace=default'
+                    def dashboardUrl = 'http://127.0.0.1:61745/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/'
                     echo "Access the Kubernetes Dashboard at: ${dashboardUrl}"
                 }
             }
