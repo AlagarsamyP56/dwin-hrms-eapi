@@ -28,7 +28,7 @@ environment {
                     sh "docker rm ${containerName} || true"
 
                     // Run the Docker container
-                    sh "docker run -d --name ${containerName} -p 8088:8081 dockermule"
+                    sh "docker run -d --name ${containerName} -p 8088:8081 mule"
 
                     // Print a message indicating that the JAR file will be copied
                     echo "Copying JAR file to Docker container: ${jarPath}"
